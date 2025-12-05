@@ -1,0 +1,632 @@
+/* Root layout inside main content */
+.overview-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100vh;
+}
+
+/* Header row */
+.overview-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.overview-subtitle {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: -12px;
+}
+
+/* Shared neumorphic card base (uses global vars) */
+.neumo-card {
+  border-radius: 18px;
+  background: var(--bg);
+  box-shadow: 8px 8px 18px var(--shadow-dark),
+    -8px -8px 18px var(--shadow-light);
+}
+
+/* ===== KPI ROW ===== */
+.dashb{
+    margin-top: -1rem;
+}
+
+.overview-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: -1rem;
+}
+
+.overview-kpi-card {
+  padding: 10px 12px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.overview-kpi-main {
+  /* main card with accent tint */
+  background: radial-gradient(circle at top left, var(--accent-soft), var(--bg));
+}
+
+.kpi-label {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.kpi-value {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.kpi-sub {
+  font-size: 10px;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+
+/* ===== GRID ROWS FOR CONTENT ===== */
+
+.overview-middle-row,
+.overview-bottom-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1.1fr 1.2fr;
+  gap: 10px;
+}
+
+/* generic block card padding */
+.overview-block {
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+.block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.block-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.block-sub {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* ===== Project Analytics – vertical pills ===== */
+
+.analytics-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 100px; /* overall chart height */
+}
+
+.analytics-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.analytics-bar-track {
+  width: 18px;
+  height: 100%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 3px 3px 7px var(--shadow-dark),
+    inset -3px -3px 7px var(--shadow-light);
+  position: relative;          /* IMPORTANT */
+  overflow: hidden;
+}
+
+.analytics-bar-fill {
+  position: absolute;          /* IMPORTANT */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.2),
+    var(--accent)
+  );
+  transition: height 220ms var(--ease-spring), transform 160ms var(--ease-spring);
+}
+
+.analytics-bar-label {
+  font-size: 9px;
+  opacity: 0.75;
+}
+
+/* Hardcoded bar heights (px) */
+.bar-sun { height: 18px; }
+.bar-mon { height: 34px; }
+.bar-tue { height: 52px; }
+.bar-wed { height: 80px; }  /* tallest */
+.bar-thu { height: 60px; }
+.bar-fri { height: 40px; }
+.bar-sat { height: 24px; }
+
+
+/* ===== Reminders ===== */
+
+.reminder-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.reminder-title {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.reminder-time {
+  opacity: 0.8;
+}
+
+.reminder-note {
+  opacity: 0.75;
+}
+
+.primary-chip-button {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 150ms var(--ease-spring),
+    box-shadow 150ms var(--ease-spring);
+}
+
+.primary-chip-button:hover {
+  transform: translateY(-1px);
+}
+
+.primary-chip-button:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Project List ===== */
+
+.project-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.project-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.project-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.dot-accent-soft {
+  background: var(--accent-soft);
+}
+
+.dot-warning {
+  background: #f1c40f;
+}
+
+.dot-neutral {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.project-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-title {
+  font-size: 11px;
+}
+
+.project-status {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.tiny-pill {
+  border-radius: 999px;
+  border: none;
+  padding: 3px 8px;
+  font-size: 10px;
+  background: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+/* ===== Team Collaboration ===== */
+
+.team-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.team-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.team-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-name {
+  font-size: 11px;
+}
+
+.team-role {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* ===== Project Progress Donut ===== */
+
+.progress-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.progress-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-ring {
+  --percent: 41;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, var(--bg) 60%, transparent 61%),
+    conic-gradient(
+      var(--accent) calc(var(--percent) * 3.6deg),
+      rgba(0, 0, 0, 0.05) 0
+    );
+  box-shadow: inset 4px 4px 10px var(--shadow-dark),
+    inset -4px -4px 10px var(--shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-center {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 2px 2px 6px var(--shadow-dark),
+    inset -2px -2px 6px var(--shadow-light);
+}
+
+.progress-value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.progress-label {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.progress-legend {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.progress-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-badge {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.badge-completed {
+  background: var(--accent);
+}
+
+.badge-progress {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.badge-pending {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Time Tracker ===== */
+
+.time-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.time-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.time-display {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.time-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.round-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 4px 4px 10px var(--shadow-dark),
+    -4px -4px 10px var(--shadow-light);
+}
+
+.round-btn-stop {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ===== RESPONSIVE SHRINK ===== */
+
+@media (max-width: 1100px) {
+  .overview-kpi-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .overview-middle-row,
+  .overview-bottom-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+.analytics-bar-fill {
+  width: 100%;
+  border-radius: 999px;
+  min-height: 6px; /* 👈 guarantees visibility */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.2),
+    var(--accent)
+  );
+  transition: height 220ms var(--ease-spring);
+}
+
+.analytics-bar-fill {
+  width: 100%;
+  border-radius: 999px;
+  min-height: 6px; /* ensures even the smallest bar is visible */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.2),
+    var(--accent)
+  );
+  transition: height 220ms var(--ease-spring);
+}
+
+
+
+
+/* Prevent neumorphism from collapsing height */
+.pa-wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 140px !important;
+  padding: 10px 5px;
+}
+
+.pa-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20px;
+}
+
+.pa-bar {
+  width: 100%;
+  border-radius: 12px;
+  background: linear-gradient(to top, var(--accent), rgba(255,255,255,0.6));
+  box-shadow: inset 2px 2px 6px var(--shadow-dark),
+              inset -2px -2px 6px var(--shadow-light);
+  transition: all 0.3s ease;
+}
+
+.pa-bar:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.pa-label {
+  font-size: 10px;
+  margin-top: 4px;
+  opacity: 0.65;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================= */
+/*   MOBILE / TABLET LAYOUT      */
+/* ============================= */
+
+/* Tablet and below */
+@media (max-width: 900px) {
+  /* Let overview section breathe on smaller screens */
+  .overview-layout {
+    height: auto;              /* no forced 100vh */
+    gap: 14px;
+  }
+
+  .overview-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .overview-subtitle {
+    margin-top: 0;
+    font-size: 11px;
+  }
+
+  /* KPI row: 2 per row */
+  .overview-kpi-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 0;
+  }
+
+  /* SHORTER KPI CARDS */
+  .overview-kpi-card {
+    padding: 8px 10px;
+  }
+
+  .kpi-value {
+    font-size: 18px;
+  }
+
+  .kpi-label {
+    font-size: 10px;
+  }
+
+  .kpi-sub {
+    font-size: 9px;
+  }
+
+  /* Middle & bottom: 2 columns instead of 3 */
+  .overview-middle-row,
+  .overview-bottom-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .overview-block {
+    padding: 10px;
+    font-size: 11px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 600px) {
+  /* KPI row: still 2 columns on phones */
+  .overview-kpi-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .overview-kpi-card {
+    padding: 6px 8px;
+  }
+
+  .kpi-value {
+    font-size: 16px;
+  }
+
+  .kpi-label {
+    font-size: 9px;
+  }
+
+  .kpi-sub {
+    font-size: 8.5px;
+  }
+
+  /* Middle & bottom: single column to avoid squish */
+  .overview-middle-row,
+  .overview-bottom-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stack donut + legend vertically */
+  .progress-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .progress-ring {
+    margin: 0 auto;
+  }
+
+  /* Keep time tracker readable */
+  .time-display {
+    font-size: 18px;
+  }
+}

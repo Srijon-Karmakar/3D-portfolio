@@ -1,0 +1,160 @@
+/* ================================
+   SMOOTH WATER RIPPLE TRANSITION
+   ================================ */
+
+.page-ripple-wrapper {
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(0.05);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  mix-blend-mode: screen; /* looks nice on dark & light */
+  animation: ripple-wrapper var(--ripple-duration, 800ms)
+    cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* Main fill – soft water bloom */
+.page-ripple-main {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.65) 0%,
+    rgba(191, 219, 254, 0.8) 18%,
+    rgba(96, 165, 250, 0.55) 40%,
+    rgba(56, 189, 248, 0.45) 60%,
+    rgba(15, 118, 180, 0.3) 75%,
+    transparent 90%
+  );
+  opacity: 1;
+}
+
+/* Rings – just transform + opacity, very cheap to animate */
+.page-ripple-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(191, 219, 254, 0.7);
+  opacity: 0;
+  transform: scale(0.4);
+  will-change: transform, opacity;
+}
+
+.page-ripple-ring.ring-1 {
+  inset: 12%;
+  animation: ripple-ring-1 var(--ripple-duration, 800ms)
+    cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.page-ripple-ring.ring-2 {
+  inset: 22%;
+  border-color: rgba(191, 219, 254, 0.55);
+  animation: ripple-ring-2 var(--ripple-duration, 800ms)
+    cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.page-ripple-ring.ring-3 {
+  inset: 32%;
+  border-color: rgba(191, 219, 254, 0.4);
+  animation: ripple-ring-3 var(--ripple-duration, 800ms)
+    cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* Core highlight */
+.page-ripple-core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(224, 242, 254, 0.8) 18%,
+    rgba(191, 219, 254, 0) 45%
+  );
+  opacity: 0;
+  transform: scale(0.2);
+  will-change: transform, opacity;
+  animation: ripple-core var(--ripple-duration, 800ms)
+    cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+/* =======================
+   KEYFRAMES
+   ======================= */
+
+@keyframes ripple-wrapper {
+  0% {
+    transform: translate(-50%, -50%) scale(0.05);
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple-ring-1 {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.0;
+  }
+  30% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple-ring-2 {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.0;
+  }
+  35% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple-ring-3 {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.0;
+  }
+  40% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple-core {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.9;
+  }
+  25% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(0.7);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,28 @@
+/* Skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.skills-card {
+  padding: 12px;
+  font-size: 13px;
+}
+
+.skills-card h3 {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.skills-card ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.skills-card li {
+  font-size: 13px;
+  opacity: 0.9;
+}

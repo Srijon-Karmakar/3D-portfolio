@@ -1,0 +1,50 @@
+/* Projects */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.project-card {
+  padding: 12px;
+  font-size: 13px;
+}
+
+.project-card h3 {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.project-tag {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 11px;
+}
+
+/* Personal Details */
+.personal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.personal-card {
+  padding: 12px;
+  font-size: 13px;
+}
+
+.personal-card h3 {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 14px;
+}

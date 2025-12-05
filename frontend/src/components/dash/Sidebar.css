@@ -1,0 +1,120 @@
+/* src/components/sidebar.mobile.css */
+/* Mobile / tablet overrides ONLY for sidebar */
+
+@media (max-width: 900px) {
+  /* Sidebar becomes a top stripe instead of tall column */
+  .sidebar {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 18px;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Profile shrinks and goes to the left */
+  .sidebar-profile-block {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0;
+    gap: 10px;
+  }
+
+  .sidebar-avatar-shell {
+    width: 54px;
+    height: 54px;
+    padding: 4px;
+  }
+
+  .sidebar-profile-info {
+    text-align: left;
+    margin-top: 0;
+  }
+
+  .profile-name {
+    font-size: 14px;
+  }
+
+  .profile-id {
+    font-size: 11px;
+  }
+
+  /* Menu becomes horizontal */
+  .sidebar-menu {
+    flex: 1;
+    margin-top: 0;
+    margin-left: 12px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .sidebar-menu-item {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  /* Footer icons move to the far right */
+  .sidebar-footer-icons {
+    margin-top: 0;
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+  }
+
+  .neumo-icon-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .sidebar {
+    padding: 8px 10px;
+    border-radius: 16px;
+    gap: 8px;
+  }
+
+  .sidebar-avatar-shell {
+    width: 46px;
+    height: 46px;
+  }
+
+  .profile-name {
+    font-size: 13px;
+  }
+
+  .profile-id {
+    font-size: 10px;
+  }
+
+  /* Menu can scroll horizontally if it overflows */
+  .sidebar-menu {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar-menu-item {
+    white-space: nowrap;
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  /* Optional: hide footer icons on very small phones */
+  .sidebar-footer-icons {
+    display: none;
+  }
+}
+
+/* Allow vertical scroll on smaller screens */
+@media (max-width: 900px) {
+  html,
+  body,
+  #root {
+    overflow-y: auto;
+  }
+}

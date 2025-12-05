@@ -1,0 +1,17 @@
+/* Personal Details */
+.personal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.personal-card {
+  padding: 12px;
+  font-size: 13px;
+}
+
+.personal-card h3 {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
