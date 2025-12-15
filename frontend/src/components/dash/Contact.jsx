@@ -14,7 +14,7 @@ export default function Contact() {
       <div className="contact-grid  ">
         <div className="contact-card neumorphic-inset  neumo-press ">
           <h3>Email</h3>
-          <p>youremail@example.com</p>
+          <p>srijonkarmakar.dev@gmail.com</p>
         </div>
         <div className="contact-card neumorphic-inset">
           <h3>LinkedIn</h3>

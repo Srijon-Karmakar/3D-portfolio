@@ -1,44 +1,71 @@
+// src/components/CubebotModel.jsx
+import React, { useRef, useEffect } from "react";
+import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import React, { useRef } from "react";
 
-export default function RobotModel() {
+// adjust path if needed
+useGLTF.preload("/cubebot.glb");
+
+export default function CubebotModel(props) {
   const group = useRef();
-  const headRef = useRef();
-  const eyeL = useRef();
-  const eyeR = useRef();
+  const { scene } = useGLTF("/cubebot.glb");
 
-  const { scene, nodes } = useGLTF("/robot.glb");
-  const { pointer, viewport } = useThree();
+  const headRef = useRef(null);
 
-  useFrame(() => {
-    const target = new THREE.Vector3(
-      (pointer.x * viewport.width) / 2,
-      (pointer.y * viewport.height) / 2,
-      2
-    );
+  // find the head object from Blender ("Head" as in your outliner)
+  useEffect(() => {
+    const head = scene.getObjectByName("Head");
+    if (head) {
+      headRef.current = head;
+    }
 
-    // HEAD follows cursor
-    const current = headRef.current.quaternion.clone();
-    headRef.current.lookAt(target);
-    const targetQuat = headRef.current.quaternion.clone();
-    headRef.current.quaternion.copy(current);
-    headRef.current.quaternion.slerp(targetQuat, 0.08);
+    const eyeL = scene.getObjectByName("Eye_L");
+    const eyeR = scene.getObjectByName("Eye_R");
 
-    // EYES follow cursor more strongly
-    eyeL.current.lookAt(target);
-    eyeR.current.lookAt(target);
+    [eyeL, eyeR].forEach((eye) => {
+      if (eye && eye.material && eye.material.isMeshStandardMaterial) {
+        eye.material.emissive = new THREE.Color("#ffffff");
+        eye.material.emissiveIntensity = 4; // tweak for glow strength
+      }
+    });
+
+
+  }, [scene]);
+
+  useFrame((state) => {
+    const { x, y } = state.pointer; // -1..1 normalized
+
+    // small idle sway for whole body
+    if (group.current) {
+      const t = state.clock.getElapsedTime();
+      const idleTilt = Math.sin(t * 0.7) * 0.05; // gentle breathing
+      group.current.rotation.x = idleTilt;
+    }
+
+    // make head follow cursor
+    if (headRef.current) {
+      const targetHeadY = x * 0.6;   // left-right
+      const targetHeadX = -y * 0.35; // up-down
+      const damping = 1.32;
+
+      headRef.current.rotation.y = THREE.MathUtils.lerp(
+        headRef.current.rotation.y,
+        targetHeadY,
+        damping
+      );
+
+      headRef.current.rotation.x = THREE.MathUtils.lerp(
+        headRef.current.rotation.x,
+        targetHeadX,
+        damping
+      );
+    }
   });
 
   return (
-    <group ref={group} position={[0.9, -10.3, 0]} scale={.2}>
-      <primitive ref={headRef} object={nodes.Head} />
-      <primitive ref={eyeL} object={nodes.Eye_L} />
-      <primitive ref={eyeR} object={nodes.Eye_R} />
-      <primitive object={nodes.body} />
-      <primitive object={nodes.led1} />
-      <primitive object={nodes.led2} />
+    <group ref={group} {...props} dispose={null}>
+      <primitive object={scene} />
     </group>
   );
 }
