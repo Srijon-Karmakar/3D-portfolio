@@ -25,7 +25,8 @@ const Home = () => {
     <main className="hero-root">
       {/* INTERACTIVE 3D BACKGROUND */}
       <div className="hero-spline">
-        <Spline scene="https://prod.spline.design/mRbyW3ufj6ArFhTK/scene.splinecode" />
+        {/* <Spline scene="https://prod.spline.design/mRbyW3ufj6ArFhTK/scene.splinecode" /> */}
+        <Spline scene="https://prod.spline.design/cuTaHyOw46Tss6Zr/scene.splinecode" />
       </div>
 
       {/* OVERLAY (NO POINTER EVENTS BY DEFAULT) */}

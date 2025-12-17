@@ -1,8 +1,4 @@
 
-
-
-
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -34,12 +30,12 @@ export default function Home() {
       <div className="hero-canvas">
         <div className="hero-canvas-inner">
           <div className="hero-canvas-float">
-            <Spline scene="https://prod.spline.design/cqkCM4wTqKla9twy/scene.splinecode" />
+            <Spline scene="https://prod.spline.design/cuTaHyOw46Tss6Zr/scene.splinecode" />
           </div>
         </div>
       </div>
 
-      <div className="hero-bg-text">SRIJON</div>
+      {/* <div className="hero-bg-text">SRIJON</div> */}
 
       <div className="hero-overlay">
         <div className="hero-text-block">
@@ -54,7 +50,7 @@ export default function Home() {
               weight={true}
               italic={true}
               textColor="#ffffff"
-              minFontSize={16}
+              minFontSize={11}
               className="hero-name-line"
             />
             <TextPressure
@@ -66,7 +62,7 @@ export default function Home() {
               weight={true}
               italic={true}
               textColor="#ffffff"
-              minFontSize={16}
+              minFontSize={11}
               className="hero-name-line"
             />
           </div>

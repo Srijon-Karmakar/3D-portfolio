@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 
+
+body {
+  transition: filter 0.3s ease;
+}
+
+body:has(canvas) {
+  filter: blur(0.6px) saturate(1.05);
+}
+
+
+
 html, body, * {
   font-family: 'Manrope', sans-serif !important;
 }
@@ -114,11 +125,8 @@ body {
 
 
 /* transition  */
-/* ================================
-   SMOOTH WATER RIPPLE TRANSITION
-   ================================ */
 
-.page-ripple-wrapper {
+/* .page-ripple-wrapper {
   position: absolute;
   border-radius: 50%;
   overflow: hidden;
@@ -126,12 +134,12 @@ body {
   opacity: 0;
   pointer-events: none;
   will-change: transform, opacity;
-  mix-blend-mode: screen; /* looks nice on dark & light */
+  mix-blend-mode: screen; 
   animation: ripple-wrapper var(--ripple-duration, 800ms)
     cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
-/* Main fill – soft water bloom */
+
 .page-ripple-main {
   position: absolute;
   inset: 0;
@@ -148,7 +156,7 @@ body {
   opacity: 1;
 }
 
-/* Rings – just transform + opacity, very cheap to animate */
+
 .page-ripple-ring {
   position: absolute;
   border-radius: 50%;
@@ -178,7 +186,7 @@ body {
     cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
-/* Core highlight */
+
 .page-ripple-core {
   position: absolute;
   inset: 0;
@@ -196,9 +204,6 @@ body {
     cubic-bezier(0.33, 1, 0.68, 1) forwards;
 }
 
-/* =======================
-   KEYFRAMES
-   ======================= */
 
 @keyframes ripple-wrapper {
   0% {
@@ -273,4 +278,4 @@ body {
     transform: scale(0.9);
     opacity: 0;
   }
-}
+} */

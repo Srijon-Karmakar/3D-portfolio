@@ -30,7 +30,7 @@ export default function PersonalDetails() {
         <div className="personal-card neumorphic-inset">
           <h3>Location & Availability</h3>
           <p>
-            Based in [Your City]. Open to remote opportunities and collaborations.
+            Based in Kolkata, India. <br /> Open to remote opportunities and collaborations.
           </p>
         </div>
       </div>

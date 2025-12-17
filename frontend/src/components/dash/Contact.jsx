@@ -12,17 +12,29 @@ export default function Contact() {
       </p>
 
       <div className="contact-grid  ">
-        <div className="contact-card neumorphic-inset  neumo-press ">
+        <div className="contact-card neumorphic-inset neumo-press">
           <h3>Email</h3>
-          <p>srijonkarmakar.dev@gmail.com</p>
+          <p>
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              srijonkarmakar.dev@gmail.com
+            </a>
+          </p>
         </div>
         <div className="contact-card neumorphic-inset">
           <h3>LinkedIn</h3>
-          <p>/in/your-profile</p>
+          <p>
+            <a href="https://www.linkedin.com/in/srijon-karmakar/">srijon-karmakar</a>
+          </p>
         </div>
         <div className="contact-card neumorphic-inset ">
           <h3>GitHub</h3>
-          <p>@your-github-handle</p>
+          <p>
+            <a href="https://github.com/Srijon-Karmakar">Srijon-Karmakar</a>
+          </p>
         </div>
       </div>
 

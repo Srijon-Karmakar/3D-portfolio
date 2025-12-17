@@ -8,6 +8,7 @@
 .project-card {
   padding: 12px;
   font-size: 13px;
+  cursor: pointer;
 }
 
 .project-card h3 {
@@ -43,8 +44,33 @@
   font-size: 13px;
 }
 
-.personal-card h3 {
+.project-card h3 {
   margin-top: 0;
   margin-bottom: 6px;
   font-size: 14px;
+  color: rgb(104, 90, 167);
+}
+.section-root h1 {
+  color: rgb(104, 90, 167);
+}
+
+
+.project-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.project-card-link:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 6px;
+}
+
+.project-card {
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
 }

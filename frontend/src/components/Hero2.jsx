@@ -97,7 +97,7 @@ export default function Home() {
 
 
             {/* BACKGROUND WATERMARK TEXT */}
-            <div className="hero-bg-text">SRIJON</div>
+            {/* <div className="hero-bg-text">SRIJON</div> */}
 
             {/* TEXT OVERLAY */}
             <div className="hero-overlay">

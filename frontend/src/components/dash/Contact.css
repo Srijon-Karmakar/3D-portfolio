@@ -75,3 +75,22 @@
   transform: translateY(1px) scale(0.97);
   box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.3);
 }
+.contact-card a {
+  color: #4f46e5;        /* link color */
+  text-decoration: none; /* remove underline */
+  font-weight: 500;
+  font-family: "Manrope";
+  font-weight: 600;
+}
+.contact-card a:hover {
+  color: #068006;
+  /* text-decoration: underline; */
+}
+
+.contact-card a:active {
+  color: #4338ca;
+}
+
+.contact-card a:visited {
+  color: #6e3707;
+}

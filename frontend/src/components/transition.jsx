@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Lenis from "lenis";
+import "./transition.css"
 
 const RIPPLE_DURATION = 800; // slightly shorter feels snappier
 
