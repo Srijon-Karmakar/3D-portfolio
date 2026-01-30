@@ -25,7 +25,7 @@
 
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./components/Hero";
+import Home from "./pages/home";
 import Spline from "./components/spline";
 import Dash from "./pages/Dashboard";
 import Transition from "./components/transition";

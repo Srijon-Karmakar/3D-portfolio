@@ -5,7 +5,7 @@ body {
   transition: filter 0.3s ease;
 }
 
-body:has(canvas) {
+body.has-hero-canvas {
   filter: blur(0.6px) saturate(1.05);
 }
 
@@ -32,7 +32,6 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
 }
 
 /* Spline full background */

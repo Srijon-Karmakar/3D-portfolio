@@ -1,15 +1,17 @@
 
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Spline from "@splinetool/react-spline";
 import { gsap } from "gsap";
 import TextPressure from "./TextPressure";
 import "./Hero.css";
 
+const Spline = lazy(() => import("@splinetool/react-spline"));
+
 export default function Home() {
 
   const navigate = useNavigate();
+  const [showSpline, setShowSpline] = useState(false);
 
   useEffect(() => {
     gsap.fromTo(
@@ -25,12 +27,46 @@ export default function Home() {
     );
   }, []);
 
+  useEffect(() => {
+    document.body.classList.add("has-hero-canvas");
+    return () => {
+      document.body.classList.remove("has-hero-canvas");
+    };
+  }, []);
+
+  useEffect(() => {
+    let idleId;
+    let timeoutId;
+
+    if ("requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(
+        () => setShowSpline(true),
+        { timeout: 1200 }
+      );
+    } else {
+      timeoutId = window.setTimeout(() => setShowSpline(true), 200);
+    }
+
+    return () => {
+      if (idleId) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, []);
+
   return (
     <main className="hero-root">
       <div className="hero-canvas">
         <div className="hero-canvas-inner">
           <div className="hero-canvas-float">
-            <Spline scene="https://prod.spline.design/cuTaHyOw46Tss6Zr/scene.splinecode" />
+            {showSpline ? (
+              <Suspense fallback={null}>
+                <Spline scene="https://prod.spline.design/cuTaHyOw46Tss6Zr/scene.splinecode" />
+              </Suspense>
+            ) : null}
           </div>
         </div>
       </div>
