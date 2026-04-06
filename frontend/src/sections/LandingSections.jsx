@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { insertContactMessage } from "../lib/supabaseContact";
 import "./LandingSections.css";
 
 const experience = [
@@ -141,21 +142,25 @@ const contactLinks = [
     label: "LinkedIn",
     value: "linkedin.com/in/srijon-karmakar",
     href: "https://www.linkedin.com/in/srijon-karmakar/",
+    action: "Open LinkedIn",
   },
   {
     label: "Email",
     value: "srijonkarmakar.dev@gmail.com",
-    href: "mailto:srijonkarmakar.dev@gmail.com",
+    href: "https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com",
+    action: "Open Gmail",
   },
   {
     label: "Website",
     value: "srijons.onrender.com",
     href: "https://srijons.onrender.com/",
+    action: "Visit website",
   },
   {
     label: "Phone",
     value: "+91 7439498882",
     href: "tel:+917439498882",
+    action: "Call now",
   },
 ];
 
@@ -210,6 +215,39 @@ export default function LandingSections() {
 
     return window.localStorage.getItem("landing-theme") || "light";
   });
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState({ type: "", text: "" });
+
+  const setField = (key, value) => {
+    setForm((current) => ({ ...current, [key]: value }));
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setStatus({ type: "", text: "" });
+
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setStatus({ type: "error", text: "Please fill all fields." });
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await insertContactMessage({
+        name: form.name.trim(),
+        email: form.email.trim().toLowerCase(),
+        message: form.message.trim(),
+      });
+
+      setStatus({ type: "success", text: "Message sent successfully." });
+      setForm({ name: "", email: "", message: "" });
+    } catch (error) {
+      setStatus({ type: "error", text: error?.message || "Failed to send message." });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -530,27 +568,63 @@ export default function LandingSections() {
       <section className="portfolio-section js-reveal-group" id="contact">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Contact</span>
-          <h2 className="section-title">Direct contact details from the resume.</h2>
+          <h2 className="section-title">Direct contact details and a working message form.</h2>
           <p className="section-copy">
-            Reach out through email, LinkedIn, website, or phone. For project work,
-            email or LinkedIn is the cleanest first touchpoint.
+            Reach out through email, LinkedIn, website, or phone, or send a message
+            directly here through the Supabase contact form.
           </p>
         </div>
 
         <div className="contact-grid-landing">
           {contactLinks.map((item) => (
-            <a
-              className="contact-card-landing js-reveal"
-              key={item.label}
-              href={item.href}
-              target={item.href.startsWith("http") ? "_blank" : undefined}
-              rel={item.href.startsWith("http") ? "noreferrer" : undefined}
-            >
+            <article className="contact-card-landing js-reveal" key={item.label}>
               <span>{item.label}</span>
               <strong>{item.value}</strong>
-            </a>
+              <a
+                className="contact-card-action"
+                href={item.href}
+                target={item.href.startsWith("http") ? "_blank" : undefined}
+                rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+              >
+                {item.action}
+              </a>
+            </article>
           ))}
         </div>
+
+        <form className="landing-contact-form js-reveal" onSubmit={onSubmit}>
+          <div className="landing-contact-row">
+            <input
+              type="text"
+              placeholder="Your name"
+              value={form.name}
+              onChange={(event) => setField("name", event.target.value)}
+            />
+            <input
+              type="email"
+              placeholder="Your email"
+              value={form.email}
+              onChange={(event) => setField("email", event.target.value)}
+            />
+          </div>
+
+          <textarea
+            rows="5"
+            placeholder="Tell me about the project, timeline, or what you need built."
+            value={form.message}
+            onChange={(event) => setField("message", event.target.value)}
+          />
+
+          {status.text ? (
+            <p className={`landing-contact-status landing-contact-status-${status.type}`}>
+              {status.text}
+            </p>
+          ) : null}
+
+          <button className="cta-button cta-button-primary landing-contact-submit" type="submit" disabled={loading}>
+            {loading ? "Sending..." : "Send message"}
+          </button>
+        </form>
       </section>
 
       <footer className="site-footer">

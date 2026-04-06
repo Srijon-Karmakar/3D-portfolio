@@ -28,6 +28,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Spline from "./components/spline";
 import Dash from "./pages/Dashboard";
+import Admin from "./pages/Admin";
 import Transition from "./components/transition";
 
 
@@ -50,6 +51,7 @@ export default function App() {
         {/* Home route */}
         <Route path="/" element={<Home />} />
         <Route path="/spline" element={<Spline />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/Stats" element={
             <Dash
               onCycleTheme={handleCycleTheme}

@@ -9,9 +9,15 @@ import "./Hero.css";
 const Spline = lazy(() => import("@splinetool/react-spline"));
 
 export default function Home() {
-
   const navigate = useNavigate();
   const [showSpline, setShowSpline] = useState(false);
+
+  const scrollToContact = () => {
+    document.getElementById("contact")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   useEffect(() => {
     gsap.fromTo(
@@ -128,6 +134,13 @@ export default function Home() {
               onClick={() => window.open("/Srijon_Karmakar_resume.pdf", "_blank")}
             >
               View CV
+            </button>
+
+            <button
+              className="hero-btn"
+              onClick={scrollToContact}
+            >
+              Contact
             </button>
           </div>
 

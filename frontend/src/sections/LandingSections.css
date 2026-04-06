@@ -21,6 +21,11 @@
   --landing-cta-button-bg: rgba(17, 17, 17, 0.04);
   --landing-cta-button-border: transparent;
   --landing-cta-button-text: #111111;
+  --landing-neumo-surface: #f6f3fb;
+  --landing-neumo-shadow-dark: rgba(175, 166, 197, 0.5);
+  --landing-neumo-shadow-light: rgba(255, 255, 255, 0.95);
+  --landing-neumo-inset-dark: rgba(181, 171, 201, 0.42);
+  --landing-neumo-inset-light: rgba(255, 255, 255, 0.96);
   position: relative;
   background: var(--landing-bg);
   color: var(--landing-fg);
@@ -52,6 +57,11 @@
   --landing-cta-button-bg: rgba(255, 255, 255, 0.06);
   --landing-cta-button-border: transparent;
   --landing-cta-button-text: #ffffff;
+  --landing-neumo-surface: #101016;
+  --landing-neumo-shadow-dark: rgba(0, 0, 0, 0.48);
+  --landing-neumo-shadow-light: rgba(255, 255, 255, 0.03);
+  --landing-neumo-inset-dark: rgba(0, 0, 0, 0.44);
+  --landing-neumo-inset-light: rgba(255, 255, 255, 0.05);
 }
 
 .landing-toolbar {
@@ -536,8 +546,112 @@
 .contact-card-landing {
   display: grid;
   gap: 0.35rem;
-  text-decoration: none;
+  align-content: start;
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.contact-card-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 2.85rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: var(--landing-neumo-surface);
+  color: var(--landing-fg);
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow:
+    8px 8px 18px var(--landing-neumo-shadow-dark),
+    -8px -8px 18px var(--landing-neumo-shadow-light);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.contact-card-action:hover {
+  transform: translateY(1px) scale(0.985);
+  box-shadow:
+    inset 7px 7px 14px var(--landing-neumo-inset-dark),
+    inset -7px -7px 14px var(--landing-neumo-inset-light);
+}
+
+.contact-card-action:active {
+  transform: translateY(2px) scale(0.975);
+  box-shadow:
+    inset 10px 10px 18px var(--landing-neumo-inset-dark),
+    inset -9px -9px 18px var(--landing-neumo-inset-light);
+}
+
+.landing-contact-form {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.landing-contact-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+.landing-contact-form input,
+.landing-contact-form textarea {
+  width: 100%;
+  padding: 1rem 1.05rem;
+  border: none;
+  border-radius: 1rem;
+  outline: none;
+  background: var(--landing-neumo-surface);
+  color: var(--landing-fg);
+  font: inherit;
+  resize: vertical;
+  box-shadow:
+    inset 8px 8px 16px var(--landing-neumo-inset-dark),
+    inset -8px -8px 16px var(--landing-neumo-inset-light);
+  transition: box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.landing-contact-form input::placeholder,
+.landing-contact-form textarea::placeholder {
+  color: var(--landing-muted);
+}
+
+.landing-contact-form input:focus,
+.landing-contact-form textarea:focus {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 10px 10px 18px var(--landing-neumo-inset-dark),
+    inset -10px -10px 18px var(--landing-neumo-inset-light);
+}
+
+.landing-contact-status {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.landing-contact-status-success {
+  color: #15803d;
+}
+
+.landing-contact-status-error {
+  color: #b91c1c;
+}
+
+.landing-shell-dark .landing-contact-status-success {
+  color: #86efac;
+}
+
+.landing-shell-dark .landing-contact-status-error {
+  color: #fca5a5;
+}
+
+.landing-contact-submit {
+  justify-self: flex-start;
 }
 
 .contact-card-landing:hover,
@@ -625,6 +739,10 @@
   }
 
   .project-grid-landing {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landing-contact-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
