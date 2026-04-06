@@ -1,67 +1,7 @@
-// // src/components/sections/Contact.jsx
-// import React from "react";
-// import "./Contact.css";
-
-// export default function Contact() {
-//   return (
-//     <section className="section-root">
-//       <h1 className="section-title">Contact</h1>
-//       <p className="section-text">
-//         Let&apos;s connect. I&apos;m happy to collaborate, discuss ideas, or
-//         explore opportunities.
-//       </p>
-
-//       <div className="contact-grid  ">
-//         <div className="contact-card neumorphic-inset neumo-press">
-//           <h3>Email</h3>
-//           <p>
-//             <a
-//               href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com"
-//               target="_blank"
-//               rel="noopener noreferrer"
-//             >
-//               srijonkarmakar.dev@gmail.com
-//             </a>
-//           </p>
-//         </div>
-//         <div className="contact-card neumorphic-inset">
-//           <h3>LinkedIn</h3>
-//           <p>
-//             <a href="https://www.linkedin.com/in/srijon-karmakar/">srijon-karmakar</a>
-//           </p>
-//         </div>
-//         <div className="contact-card neumorphic-inset ">
-//           <h3>GitHub</h3>
-//           <p>
-//             <a href="https://github.com/Srijon-Karmakar">Srijon-Karmakar</a>
-//           </p>
-//         </div>
-//       </div>
-
-//       <form className="contact-form neumorphic-inset ">
-//         <div className="form-row">
-//           <input type="text" placeholder="Your Name" />
-//           <input type="email" placeholder="Your Email" />
-//         </div>
-//         <textarea placeholder="Your message..." rows="3" />
-//         <button type="submit" id="sendmsg" className="primary-button ">
-//           Send Message
-//         </button>
-//       </form>
-//     </section>
-//   );
-// }
-
-
-
-
-
-
-
-
-// src/components/sections/Contact.jsx
 import React, { useState } from "react";
 import "./Contact.css";
+import { resumeContactCards } from "../../data/resumeData";
+import { insertContactMessage } from "../../lib/supabaseContact";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -81,22 +21,16 @@ export default function Contact() {
 
     try {
       setLoading(true);
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+      await insertContactMessage({
+        name: form.name.trim(),
+        email: form.email.trim().toLowerCase(),
+        message: form.message.trim(),
       });
-      const data = await res.json();
 
-      if (!res.ok || !data.ok) {
-        setStatus({ type: "error", text: data?.message || "Failed to send." });
-        return;
-      }
-
-      setStatus({ type: "success", text: "Message sent! Check your email ✅" });
+      setStatus({ type: "success", text: "Message sent successfully." });
       setForm({ name: "", email: "", message: "" });
     } catch (err) {
-      setStatus({ type: "error", text: "Network error. Please try again." });
+      setStatus({ type: "error", text: err?.message || "Failed to send." });
     } finally {
       setLoading(false);
     }
@@ -106,11 +40,24 @@ export default function Contact() {
     <section className="section-root">
       <h1 className="section-title">Contact</h1>
       <p className="section-text">
-        Let&apos;s connect. I&apos;m happy to collaborate, discuss ideas, or explore opportunities.
+        Reach out through the CV contact details below or send a direct message from the dashboard.
       </p>
 
       <div className="contact-grid">
-        {/* your cards unchanged */}
+        {resumeContactCards.map((item) => (
+          <div key={item.title} className="contact-card neumorphic-inset neumo-press">
+            <h3>{item.title}</h3>
+            <p>
+              <a
+                href={item.href}
+                target={item.href.startsWith("http") ? "_blank" : undefined}
+                rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              >
+                {item.value}
+              </a>
+            </p>
+          </div>
+        ))}
       </div>
 
       <form className="contact-form neumorphic-inset" onSubmit={onSubmit}>
@@ -149,4 +96,3 @@ export default function Contact() {
     </section>
   );
 }
-
