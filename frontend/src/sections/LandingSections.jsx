@@ -336,11 +336,11 @@ export default function LandingSections() {
       <section className="portfolio-section portfolio-section-intro js-reveal-group" id="about">
         <div className="section-heading js-reveal">
           <span className="section-kicker">About</span>
-          <h2 className="section-title">Clean interfaces, full-stack logic, and a mobile-first build style.</h2>
+          <h2 className="section-title">Designing with purpose, building with precision.</h2>
           <p className="section-copy">
-            Full Stack Developer based in Kolkata, India. I work across product UI,
-            backend services, and interaction polish, with a strong preference for
-            clear structure, usable motion, and typography that reads well on small screens.
+            Full Stack Developer specializing in high-performance web applications, 
+            scalable architectures, and refined user experiences with a focus on 
+            clean code and mobile-first logic.
           </p>
         </div>
 
@@ -388,7 +388,11 @@ export default function LandingSections() {
       <section className="portfolio-section js-reveal-group" id="skills">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Skills</span>
-          <h2 className="section-title">Technical range built around readable product experiences.</h2>
+          <h2 className="section-title">A modern stack for high-performance products.</h2>
+          <p className="section-copy">
+            Technical expertise focused on building robust, scalable, and user-centric 
+            digital solutions using industry-standard tools and frameworks.
+          </p>
         </div>
 
         <div className="skills-grid-landing">
@@ -416,7 +420,11 @@ export default function LandingSections() {
       <section className="portfolio-section portfolio-section-featured js-reveal-group" id="projects">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Projects</span>
-          <h2 className="section-title">Real projects from the CV, presented with stronger structure.</h2>
+          <h2 className="section-title">Selected works and engineering experiments.</h2>
+          <p className="section-copy">
+            A showcase of technical challenges solved through clean code, 
+            innovative design, and practical software engineering principles.
+          </p>
         </div>
 
         <div className="project-grid-landing">
@@ -458,7 +466,11 @@ export default function LandingSections() {
       <section className="portfolio-section js-reveal-group" id="experience">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Experience</span>
-          <h2 className="section-title">Recent work focused on shipping stable, user-aware products.</h2>
+          <h2 className="section-title">Professional journey and technical milestones.</h2>
+          <p className="section-copy">
+            A timeline of professional growth and contributions to impactful 
+            software projects across diverse industries.
+          </p>
         </div>
 
         <div className="timeline">
@@ -486,7 +498,11 @@ export default function LandingSections() {
       <section className="portfolio-section js-reveal-group" id="services">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Services</span>
-          <h2 className="section-title">The kind of work this background translates into.</h2>
+          <h2 className="section-title">Bringing digital visions to life.</h2>
+          <p className="section-copy">
+            Comprehensive development services tailored to modern business 
+            needs and high user expectations.
+          </p>
         </div>
 
         <div className="service-list">
@@ -502,7 +518,11 @@ export default function LandingSections() {
       <section className="portfolio-section js-reveal-group" id="testimonials">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Proof</span>
-          <h2 className="section-title">Resume-backed signals of how I work with teams and products.</h2>
+          <h2 className="section-title">Commitment to excellence and collaboration.</h2>
+          <p className="section-copy">
+            Validated experience in delivering quality software and working 
+            effectively within cross-functional teams to ship successful products.
+          </p>
         </div>
 
         <div className="testimonial-grid">
@@ -523,7 +543,11 @@ export default function LandingSections() {
       <section className="portfolio-section js-reveal-group" id="blog">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Learning</span>
-          <h2 className="section-title">Interests that keep the work visually sharp and technically curious.</h2>
+          <h2 className="section-title">Explorations beyond the codebase.</h2>
+          <p className="section-copy">
+            Continuous learning and creative pursuits that inform my technical 
+            and design perspective, keeping the work fresh and innovative.
+          </p>
         </div>
 
         <div className="blog-grid">
@@ -541,10 +565,10 @@ export default function LandingSections() {
         <div className="cta-layout">
           <div className="section-heading js-reveal">
             <span className="section-kicker">CTA</span>
-            <h2 className="section-title">Need a clean product UI that still feels distinctive?</h2>
+            <h2 className="section-title">Let's build something exceptional.</h2>
             <p className="section-copy">
-              I build mobile-first interfaces with strong typography, responsive behavior,
-              and implementation that stays practical on lower-end devices too.
+              Transitioning ideas into production-ready reality through 
+              distinguished design and engineering excellence.
             </p>
           </div>
 
@@ -568,10 +592,10 @@ export default function LandingSections() {
       <section className="portfolio-section js-reveal-group" id="contact">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Contact</span>
-          <h2 className="section-title">Direct contact details and a working message form.</h2>
+          <h2 className="section-title">Start a conversation.</h2>
           <p className="section-copy">
-            Reach out through email, LinkedIn, website, or phone, or send a message
-            directly here through the Supabase contact form.
+            Reach out to discuss collaborations, upcoming projects, 
+            or technical consulting. I'm always open to new opportunities.
           </p>
         </div>
 
