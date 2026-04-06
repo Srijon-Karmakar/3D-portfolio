@@ -1,9 +1,8 @@
 import React from "react";
 import "./Header.css"; 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Header({ onCycleTheme, themeIndex }) {
-  const navigate = useNavigate();
   const themeNames = [
     "Ocean Mist",
     "Sunset Glow",
@@ -41,9 +40,9 @@ export default function Header({ onCycleTheme, themeIndex }) {
           {themeNames[themeIndex] || "Custom Theme"}
         </div>
 
-       <button className="neumo-card neumo-press" onClick={() => navigate("/")}>
+       <Link className="header-home-link neumo-card neumo-press" to="/">
         Home
-       </button>
+       </Link>
 
 
       </div>

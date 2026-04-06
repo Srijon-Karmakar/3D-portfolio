@@ -40,7 +40,7 @@ export default function Contact() {
     <section className="section-root">
       <h1 className="section-title">Contact</h1>
       <p className="section-text">
-        Reach out through the CV contact details below or send a direct message from the dashboard.
+        Reach out through the CV contact details below or send a direct message from the dashboard. Messages are stored in Supabase.
       </p>
 
       <div className="contact-grid">
