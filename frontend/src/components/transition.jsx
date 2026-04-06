@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Lenis from "lenis";
 import "./transition.css"
 
-const RIPPLE_DURATION = 800; // slightly shorter feels snappier
+const RIPPLE_DURATION = 960;
 
 export default function Transition() {
   const navigate = useNavigate();
@@ -133,11 +133,16 @@ export default function Transition() {
             "--ripple-duration": `${RIPPLE_DURATION}ms`,
           }}
         >
-          <div className="page-ripple-main" />
-          <div className="page-ripple-ring ring-1" />
-          <div className="page-ripple-ring ring-2" />
-          <div className="page-ripple-ring ring-3" />
-          <div className="page-ripple-core" />
+          <div className="page-ripple-surface">
+            <div className="page-ripple-refraction" />
+            <div className="page-ripple-caustic caustic-a" />
+            <div className="page-ripple-caustic caustic-b" />
+            <div className="page-ripple-ring ring-1" />
+            <div className="page-ripple-ring ring-2" />
+            <div className="page-ripple-ring ring-3" />
+            <div className="page-ripple-ring ring-4" />
+            <div className="page-ripple-core" />
+          </div>
         </div>
       )}
     </div>

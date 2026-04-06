@@ -12,12 +12,12 @@ body,
 #root {
   margin: 0;
   padding: 0;
-  height: 100%;
+  min-height: 100%;
   font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
     "Segoe UI", sans-serif;
   background: #e0e5ec;
   color: #333;
-  overflow: hidden; /* 🔒 non-scrollable */
+  overflow-x: hidden;
 }
 
 button {

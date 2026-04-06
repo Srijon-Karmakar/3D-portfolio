@@ -6,7 +6,7 @@ body {
 }
 
 body.has-hero-canvas {
-  filter: blur(0.6px) saturate(1.05);
+  filter: none;
 }
 
 
@@ -22,8 +22,10 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
   background: #000;
 }
 

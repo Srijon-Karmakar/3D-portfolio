@@ -28,13 +28,6 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    document.body.classList.add("has-hero-canvas");
-    return () => {
-      document.body.classList.remove("has-hero-canvas");
-    };
-  }, []);
-
-  useEffect(() => {
     let idleId;
     let timeoutId;
 
@@ -125,7 +118,7 @@ export default function Home() {
           <div className="hero-buttons">
             <button
               className="hero-btn"
-              onClick={() => navigate("/stats")}
+              onClick={() => navigate("/Stats")}
             >
               View Stats
             </button>
