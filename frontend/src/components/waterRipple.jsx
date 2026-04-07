@@ -53,16 +53,21 @@ export default function WaterRipple({
 
     const resize = () => {
       const rect = wrap.getBoundingClientRect();
-      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      // Cap DPR at 1 on mobile to halve pixel work
+      const isMobile = window.innerWidth <= 768;
+      const dpr = isMobile ? 1 : Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      // Use half resolution simulation on mobile (4× less work)
+      const resScale = isMobile ? 0.5 : 1;
 
-      state.w = Math.max(1, Math.floor(rect.width));
-      state.h = Math.max(1, Math.floor(rect.height));
+      state.w = Math.max(1, Math.floor(rect.width * resScale));
+      state.h = Math.max(1, Math.floor(rect.height * resScale));
       state.dpr = dpr;
+      state.resScale = resScale;
 
       canvas.width = Math.floor(state.w * dpr);
       canvas.height = Math.floor(state.h * dpr);
-      canvas.style.width = `${state.w}px`;
-      canvas.style.height = `${state.h}px`;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
@@ -203,11 +208,18 @@ export default function WaterRipple({
     const tick = (t) => {
       state.raf = requestAnimationFrame(tick);
 
+      // Throttle to ~30fps on mobile to reduce CPU/GPU load
+      if (state.resScale < 1) {
+        if (!state.lastTick) state.lastTick = t;
+        if (t - state.lastTick < 33) return;
+        state.lastTick = t;
+      }
+
       if (autoDrop) {
         if (!state.lastAuto) state.lastAuto = t;
         if (t - state.lastAuto > 700) {
           state.lastAuto = t;
-          drop(Math.random() * state.w, Math.random() * state.h, dropStrength * 0.12, dropRadius * 0.9);
+          drop(Math.random() * state.w, Math.random() * state.h, dropStrength * 0.12, dropRadius * (state.resScale || 1) * 0.9);
         }
       }
 
@@ -217,10 +229,11 @@ export default function WaterRipple({
 
     const getPos = (e) => {
       const rect = wrap.getBoundingClientRect();
+      const scale = state.resScale || 1;
       if ("touches" in e && e.touches?.[0]) {
-        return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+        return { x: (e.touches[0].clientX - rect.left) * scale, y: (e.touches[0].clientY - rect.top) * scale };
       }
-      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      return { x: (e.clientX - rect.left) * scale, y: (e.clientY - rect.top) * scale };
     };
 
     let lastMove = 0;

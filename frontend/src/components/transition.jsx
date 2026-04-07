@@ -10,6 +10,10 @@ export default function Transition() {
 
   // ---- INIT LENIS ----
   useEffect(() => {
+    // Skip smooth scroll on mobile — native scroll is faster on touch devices
+    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+    if (isMobile) return;
+
     const lenis = new Lenis({
       lerp: 0.1,
       smoothWheel: true,

@@ -56,7 +56,7 @@ const TextPressure = ({
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
     if (containerRef.current) {
       const { left, top, width, height } = containerRef.current.getBoundingClientRect();
@@ -104,6 +104,17 @@ const TextPressure = ({
   }, [scale, text]);
 
   useEffect(() => {
+    // Skip per-frame font-variation RAF on touch devices — no pointer to track
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) {
+      // Apply neutral/default font variation statically
+      spansRef.current.forEach(span => {
+        if (!span) return;
+        span.style.fontVariationSettings = `'wght' 400, 'wdth' 100, 'ital' 0`;
+      });
+      return;
+    }
+
     let rafId;
     const animate = () => {
       mouseRef.current.x += (cursorRef.current.x - mouseRef.current.x) / 15;
