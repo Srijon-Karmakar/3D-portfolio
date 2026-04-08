@@ -1084,11 +1084,36 @@ export default function LandingSections() {
         },
       });
     }).filter(Boolean);
+    const cards = Array.from(root.querySelectorAll(".service-card"));
+    cards.forEach((card) => {
+      gsap.set(card, {
+        opacity: 0,
+        y: 52,
+        scale: 0.98,
+        transformOrigin: "center top",
+      });
+    });
+
+    const cardsReveal = ScrollTrigger.batch(cards, {
+      start: "top 90%",
+      once: true,
+      onEnter: (batch) => {
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.7,
+          ease: "power2.out",
+          stagger: { each: 0.08, from: "start" },
+        });
+      },
+    });
 
     return () => {
       observer.disconnect();
       glyphAnimations.forEach((animation) => animation.kill());
       stackTriggers.forEach((t) => t.kill());
+      cardsReveal?.kill();
     };
   }, []);
 
@@ -1370,7 +1395,8 @@ export default function LandingSections() {
         </div>
       </section>
 
-      <section className="portfolio-section js-reveal-group" id="approach">
+
+      {/* <section className="portfolio-section js-reveal-group" id="approach">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Approach</span>
           <h2 className="section-title">How I work.</h2>
@@ -1392,9 +1418,10 @@ export default function LandingSections() {
             </article>
           ))}
         </div>
-      </section>
+      </section> */}
 
-      <section className="portfolio-section js-reveal-group" id="blog">
+
+      {/* <section className="portfolio-section js-reveal-group" id="blog">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Beyond Code</span>
           <h2 className="section-title">Beyond code.</h2>
@@ -1412,7 +1439,7 @@ export default function LandingSections() {
             </article>
           ))}
         </div>
-      </section>
+      </section> */}
 
       <section className="portfolio-section cta-panel js-reveal-group" id="cta">
         <div className="cta-layout">

@@ -30,7 +30,7 @@
   background: var(--landing-bg);
   color: var(--landing-fg);
   padding: 1.5rem 1rem 2.75rem;
-  overflow-x: clip;
+
   transition: background 260ms ease, color 260ms ease;
 }
 
@@ -924,7 +924,7 @@
   background: var(--landing-bg);
   color: var(--landing-fg);
   padding: 1.5rem 1rem 2.75rem;
-  overflow-x: clip;
+
   transition: background 260ms ease, color 260ms ease;
 }
 
@@ -1158,7 +1158,8 @@
 .about-photo-stack {
   position: relative;
   width: 200px;
-  height: 264px; /* card height (240) + 24px peek space at top */
+  height: 264px;
+  /* card height (240) + 24px peek space at top */
   margin: 0 auto;
 }
 
@@ -1171,7 +1172,7 @@
   object-fit: cover;
   border-radius: 1.25rem;
   transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.5s ease;
+    opacity 0.5s ease;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
   will-change: transform, opacity;
 }
@@ -1199,7 +1200,7 @@
   color: var(--landing-text);
   cursor: pointer;
   transition: background 0.18s ease, color 0.18s ease,
-              border-color 0.18s ease, transform 0.15s ease;
+    border-color 0.18s ease, transform 0.15s ease;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -1429,8 +1430,13 @@
 }
 
 @keyframes svc-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .services-marquee-item {
@@ -1457,7 +1463,8 @@
   flex-direction: column;
   /* side margins: not full-width */
   padding: 0 1rem;
-  gap: 0; /* no gap — sticky handles visual separation */
+  gap: 0;
+  /* no gap — sticky handles visual separation */
 }
 
 /* Each wrap sticks progressively lower, creating visible peeking stack */
@@ -1478,12 +1485,13 @@
   border-radius: 1.25rem;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07),
-              0 8px 32px rgba(0, 0, 0, 0.05);
+    0 8px 32px rgba(0, 0, 0, 0.05);
+  will-change: transform, opacity;
 }
 
 .landing-shell-dark .service-card {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4),
-              0 8px 32px rgba(0, 0, 0, 0.3);
+    0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 /* Mobile: image on top (compact), content below */
@@ -1494,7 +1502,8 @@
 
 .service-card-right {
   width: 100%;
-  height: 140px; /* compact image strip on mobile */
+  height: 140px;
+  /* compact image strip on mobile */
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -1589,7 +1598,8 @@
 
   .service-card-content {
     flex-direction: row;
-    height: 260px; /* fixed shorter height on desktop */
+    height: 260px;
+    /* fixed shorter height on desktop */
   }
 
   .service-card-left {
@@ -1690,7 +1700,9 @@
 
 .cta-button:hover {
   transform: translateY(-1px);
-  background: var(--landing-pill-bg);
+  /* background: var(--landing-pill-bg); */
+  background: beige;
+  color:#0071e3;
 }
 
 .cta-button-primary {
