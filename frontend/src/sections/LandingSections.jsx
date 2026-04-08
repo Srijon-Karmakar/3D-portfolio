@@ -691,8 +691,11 @@
 // 2nd attempt: 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { insertContactMessage } from "../lib/supabaseContact";
 import "./LandingSections.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const experience = [
   {
@@ -718,8 +721,19 @@ const experience = [
   },
 ];
 
+const aboutPhotos = [
+  "/me.jpg",
+  "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80&fit=crop",
+  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80&fit=crop",
+  "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80&fit=crop",
+];
 
-
+const STACK_TRANSFORMS = [
+  "translateY(0px) rotate(0deg) scale(1)",
+  "translateY(-10px) rotate(-3.5deg) scale(0.96)",
+  "translateY(-18px) rotate(4deg) scale(0.92)",
+  "translateY(-24px) rotate(-2deg) scale(0.88)",
+];
 
 const skillRailOne = [
   { label: "React.js", icon: "window" },
@@ -810,10 +824,34 @@ const projects = [
 ];
 
 const services = [
-  "Full-stack web application development with React.js, Node.js, and Django",
-  "REST API development and backend architecture design",
-  "Authentication systems with role-based access control",
-  "Dashboard and data-driven application development",
+  {
+    title: "Full-Stack Dev",
+    description:
+      "End-to-end web applications built with React.js, Node.js, and Django. From system architecture to deployment, I own the full lifecycle.",
+    tags: ["React.js", "Node.js", "Django", "REST APIs", "PostgreSQL"],
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80&fit=crop",
+  },
+  {
+    title: "Backend Systems",
+    description:
+      "Scalable server-side architecture, REST API design, database modelling, and role-based authentication built for real production loads.",
+    tags: ["Node.js", "Express", "PostgreSQL", "MongoDB", "JWT"],
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&q=80&fit=crop",
+  },
+  {
+    title: "UI & Interfaces",
+    description:
+      "Clean, responsive dashboards and workflow interfaces with a strong focus on performance, usability, and modern interaction design.",
+    tags: ["React.js", "Tailwind", "GSAP", "Framer Motion"],
+    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=900&q=80&fit=crop",
+  },
+  {
+    title: "Data & Automation",
+    description:
+      "Data-driven applications, visualisation dashboards, and Python-based automation workflows grounded in a Data Science foundation.",
+    tags: ["Python", "Data Science", "Django", "Automation"],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80&fit=crop",
+  },
 ];
 
 const proofCards = [
@@ -936,6 +974,10 @@ export default function LandingSections() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ type: "", text: "" });
+  const [activePhoto, setActivePhoto] = useState(0);
+
+  const nextPhoto = () => setActivePhoto((current) => (current + 1) % aboutPhotos.length);
+  const prevPhoto = () => setActivePhoto((current) => (current === 0 ? aboutPhotos.length - 1 : current - 1));
 
   const setField = (key, value) => {
     setForm((current) => ({ ...current, [key]: value }));
@@ -1020,9 +1062,33 @@ export default function LandingSections() {
       })
     );
 
+    // Scale-down effect: each card shrinks slightly as the next slides over it
+    const serviceWraps = Array.from(root.querySelectorAll(".service-wrap"));
+    const stackTriggers = serviceWraps.slice(0, -1).map((wrap, i) => {
+      const card = wrap.querySelector(".service-card");
+      const nextWrap = serviceWraps[i + 1];
+      if (!card || !nextWrap) return null;
+
+      return ScrollTrigger.create({
+        trigger: nextWrap,
+        start: "top 88%",
+        end: "top 30%",
+        scrub: 0.6,
+        onUpdate(self) {
+          const p = self.progress;
+          gsap.set(card, {
+            scale: 1 - p * 0.03,
+            transformOrigin: "center top",
+            filter: `brightness(${1 - p * 0.08})`,
+          });
+        },
+      });
+    }).filter(Boolean);
+
     return () => {
       observer.disconnect();
       glyphAnimations.forEach((animation) => animation.kill());
+      stackTriggers.forEach((t) => t.kill());
     };
   }, []);
 
@@ -1061,15 +1127,44 @@ export default function LandingSections() {
 
         <div className="about-layout">
           <article className="about-summary-card js-reveal">
-            <div className="about-photo-wrap">
-              <img
-                className="about-photo"
-                src="/me.jpg"
-                alt="Srijon Karmakar"
-                loading="lazy"
-              />
-              <div className="about-photo-glyph glyph-card js-glyph-float" aria-hidden="true">
-                <Glyph type="window" />
+            <div className="about-photo-deck">
+              <div className="about-photo-stack">
+                {aboutPhotos.map((src, index) => {
+                  const offset = (index - activePhoto + aboutPhotos.length) % aboutPhotos.length;
+                  const tf = STACK_TRANSFORMS[offset] ?? STACK_TRANSFORMS[STACK_TRANSFORMS.length - 1];
+                  return (
+                    <img
+                      key={src}
+                      className="about-photo-stacked"
+                      src={src}
+                      alt="Srijon Karmakar"
+                      loading={offset === 0 ? "eager" : "lazy"}
+                      style={{
+                        zIndex: aboutPhotos.length - offset,
+                        transform: tf,
+                        opacity: offset === 0 ? 1 : Math.max(0.45, 1 - offset * 0.22),
+                      }}
+                    />
+                  );
+                })}
+              </div>
+
+              <div className="about-photo-controls">
+                <button type="button" className="photo-arrow-btn" onClick={prevPhoto} aria-label="Previous photo">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+                <span className="photo-dot-row">
+                  {aboutPhotos.map((_, i) => (
+                    <span key={i} className={`photo-dot${i === activePhoto ? " photo-dot-active" : ""}`} />
+                  ))}
+                </span>
+                <button type="button" className="photo-arrow-btn" onClick={nextPhoto} aria-label="Next photo">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
               </div>
             </div>
 
@@ -1225,21 +1320,52 @@ export default function LandingSections() {
         </div>
       </section>
 
-      <section className="portfolio-section js-reveal-group" id="services">
-        <div className="section-heading js-reveal">
-          <span className="section-kicker">What I do</span>
-          <h2 className="section-title">What I do.</h2>
-          <p className="section-copy">
-            Full-stack development, backend systems, and scalable web applications.
-          </p>
+      <section className="services-section" id="services">
+        <h2 className="sr-only">What I do</h2>
+
+        {/* Marquee rail */}
+        <div className="services-marquee" aria-hidden="true">
+          <div className="services-marquee-track">
+            {[...services, ...services].map((s, i) => (
+              <span key={`${s.title}-${i}`} className="services-marquee-item">
+                {s.title}
+                <span className="services-marquee-sep" aria-hidden="true">·</span>
+              </span>
+            ))}
+          </div>
         </div>
 
-        <div className="service-list">
-          {services.map((service) => (
-            <article className="service-item js-reveal" key={service}>
-              <span className="service-dot" aria-hidden="true" />
-              <p>{service}</p>
-            </article>
+        {/* Sticky stacking cards */}
+        <div className="services-stack">
+          {services.map((service, index) => (
+            <div
+              className="service-wrap"
+              key={service.title}
+              style={{ "--ci": index, zIndex: index + 1 }}
+            >
+              <article className="service-card">
+                <div className="service-card-content">
+                  <div className="service-card-left">
+                    <span className="service-card-num">0{index + 1}</span>
+                    <h3 className="service-card-title">{service.title}</h3>
+                    <p className="service-card-desc">{service.description}</p>
+                    <div className="service-card-tags">
+                      {service.tags.map((tag) => (
+                        <span key={tag} className="service-card-tag">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="service-card-right">
+                    <img
+                      className="service-card-img"
+                      src={service.image}
+                      alt={service.title}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </article>
+            </div>
           ))}
         </div>
       </section>
