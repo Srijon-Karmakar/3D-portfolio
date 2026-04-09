@@ -1113,7 +1113,7 @@ export default function LandingSections() {
       observer.disconnect();
       glyphAnimations.forEach((animation) => animation.kill());
       stackTriggers.forEach((t) => t.kill());
-      cardsReveal?.kill();
+      cardsReveal?.forEach((trigger) => trigger.kill());
     };
   }, []);
 
