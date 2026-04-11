@@ -823,6 +823,16 @@ const projects = [
   },
 ];
 
+const PROJECT_ACCENTS = [
+  "linear-gradient(135deg, #6d28d9, #8b5cf6)",
+  "linear-gradient(135deg, #4f46e5, #7c3aed)",
+  "linear-gradient(135deg, #7c3aed, #c084fc)",
+  "linear-gradient(135deg, #5b21b6, #8b5cf6)",
+  "linear-gradient(135deg, #6d28d9, #a855f7)",
+  "linear-gradient(135deg, #4338ca, #7c3aed)",
+  "linear-gradient(135deg, #7c3aed, #a78bfa)",
+];
+
 const services = [
   {
     title: "Full-Stack Dev",
@@ -1269,46 +1279,72 @@ export default function LandingSections() {
 
 
 
-      <section className="portfolio-section portfolio-section-featured js-reveal-group" id="projects">
-        <div className="section-heading js-reveal">
+      <section className="portfolio-section portfolio-section-featured proj-section js-reveal-group" id="projects">
+        <div className="section-heading proj-header js-reveal">
           <span className="section-kicker">Projects</span>
-          <h2 className="section-title">Selected work.</h2>
+          <h2 className="section-title">Selected projects.</h2>
           <p className="section-copy">
             Real-world applications built with performance, scalability, and usability in mind.
           </p>
         </div>
 
-        <div className="project-grid-landing">
+        <div className="proj-grid">
           {projects.map((project, index) => (
-            <article className="project-card-landing js-reveal" key={project.title}>
-              <div className="project-card-top">
-                <div>
-                  <div className="project-index">0{index + 1}</div>
-                  <h3>{project.title}</h3>
+            <article
+              className={`proj-card js-reveal${index === 0 ? " proj-card--featured" : ""}`}
+              key={project.title}
+            >
+              {/* Gradient top accent */}
+              <div className="proj-card__accent" style={{ background: PROJECT_ACCENTS[index] }} />
+
+              {/* Watermark number */}
+              <span className="proj-card__watermark" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+
+              <div className="proj-card__inner">
+                {/* Top row: index + ext link */}
+                <div className="proj-card__top">
+                  <span className="proj-card__num">{String(index + 1).padStart(2, "0")}</span>
+                  {project.href && (
+                    <a
+                      className="proj-card__ext"
+                      href={project.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`Open ${project.title}`}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
+                    </a>
+                  )}
                 </div>
-                <div className="glyph-card glyph-card-small js-glyph-float" aria-hidden="true">
-                  <Glyph type="grid" />
+
+                {/* Body */}
+                <div className="proj-card__body">
+                  <p className="proj-card__role">{project.role}</p>
+                  <h3 className="proj-card__title">{project.title}</h3>
+                  <p className="proj-card__desc">{project.description}</p>
+                </div>
+
+                {/* Footer: tags + CTA */}
+                <div className="proj-card__footer">
+                  <div className="proj-card__tags">
+                    {project.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                  {project.href ? (
+                    <a className="proj-card__link" href={project.href} target="_blank" rel="noreferrer">
+                      Open project <span className="proj-card__arrow">↗</span>
+                    </a>
+                  ) : (
+                    <span className="proj-card__link proj-card__link--muted">Link on request</span>
+                  )}
                 </div>
               </div>
-
-              <p className="project-role">{project.role}</p>
-              <p>{project.description}</p>
-
-              <div className="chip-wrap">
-                {project.tags.map((item) => (
-                  <span className="skill-chip skill-chip-strong" key={item}>
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              {project.href ? (
-                <a className="project-link" href={project.href} target="_blank" rel="noreferrer">
-                  Open project
-                </a>
-              ) : (
-                <span className="project-link project-link-muted">Link available on request</span>
-              )}
             </article>
           ))}
         </div>
@@ -1531,35 +1567,81 @@ export default function LandingSections() {
         </form>
       </section>
 
-      <div className="footer-bridge" aria-hidden="true" />
-
       <footer className="mega-footer">
-        {/* Accent line */}
-        <div className="mega-footer__accent" aria-hidden="true" />
 
-        {/* Top bar */}
-        <div className="mega-footer__top">
-          <div className="mega-footer__available">
-            <span className="mega-footer__dot" aria-hidden="true" />
-            Open to opportunities
+        {/* ── Dark rounded card with marquee ── */}
+        <div className="mega-footer__dark">
+          <div className="mega-footer__ticker" aria-hidden="true">
+            <div className="mega-footer__ticker-track">
+              {[...Array(2)].map((_, i) => (
+                <span key={i} className="mega-footer__ticker-group">
+                  <span className="mega-footer__ticker-item">Hire me ↗</span>
+                  <span className="mega-footer__ticker-sep">·</span>
+                  <span className="mega-footer__ticker-item">Let's work together ↗</span>
+                  <span className="mega-footer__ticker-sep">·</span>
+                  <span className="mega-footer__ticker-item">Open to opportunities ↗</span>
+                  <span className="mega-footer__ticker-sep">·</span>
+                  <span className="mega-footer__ticker-item">Get in touch ↗</span>
+                  <span className="mega-footer__ticker-sep">·</span>
+                </span>
+              ))}
+            </div>
           </div>
-          <nav className="mega-footer__nav" aria-label="Footer navigation">
-            <a href="https://www.linkedin.com/in/srijon-karmakar/" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Email</a>
-            <a href="https://github.com/srijon57" target="_blank" rel="noreferrer">GitHub</a>
-          </nav>
         </div>
 
-        {/* Giant name display */}
-        <div className="mega-footer__name" aria-label="Srijon Karmakar">
-          <span className="mega-footer__name-fill">SRIJON</span>
-          <span className="mega-footer__name-stroke">KARMAKAR</span>
-        </div>
+        {/* ── Light footer body ── */}
+        <div className="mega-footer__light">
 
-        {/* Bottom bar */}
-        <div className="mega-footer__bottom">
-          <span>© 2026 Srijon Karmakar</span>
-          <span className="mega-footer__role">Full Stack Developer · Kolkata, India</span>
+          {/* 4-column grid */}
+          <div className="mega-footer__cols">
+            <div className="mega-footer__col">
+              <p className="mega-footer__col-heading">Portfolio</p>
+              <a href="#projects">Projects</a>
+              <a href="#experience">Experience</a>
+              <a href="#about">About</a>
+              <a href="#services">Services</a>
+            </div>
+            <div className="mega-footer__col">
+              <p className="mega-footer__col-heading">Skills</p>
+              <a href="#skills">Frontend</a>
+              <a href="#skills">Backend</a>
+              <a href="#skills">Databases</a>
+              <a href="#skills">3D &amp; Motion</a>
+            </div>
+            <div className="mega-footer__col">
+              <p className="mega-footer__col-heading">Connect</p>
+              <a href="https://www.linkedin.com/in/srijon-karmakar/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Email ↗</a>
+              <a href="https://github.com/srijon57" target="_blank" rel="noreferrer">GitHub ↗</a>
+            </div>
+            <div className="mega-footer__col">
+              <p className="mega-footer__col-heading">Availability</p>
+              <span className="mega-footer__available">
+                <span className="mega-footer__dot" aria-hidden="true" />
+                Open to work
+              </span>
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Hire me</a>
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Freelance</a>
+            </div>
+          </div>
+
+          {/* Bottom bar */}
+          <div className="mega-footer__bottom">
+            <span>© 2026 Srijon Karmakar</span>
+            <span className="mega-footer__role">Kolkata, India</span>
+            <div className="mega-footer__socials">
+              <a href="https://www.linkedin.com/in/srijon-karmakar/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </a>
+              <a href="https://github.com/srijon57" target="_blank" rel="noreferrer" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              </a>
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer" aria-label="Email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </a>
+            </div>
+          </div>
+
         </div>
       </footer>
     </div>

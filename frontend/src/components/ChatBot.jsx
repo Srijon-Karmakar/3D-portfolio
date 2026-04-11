@@ -173,7 +173,7 @@ export default function ChatBot() {
         </div>
       </div>
 
-      {/* Floating trigger */}
+      {/* Floating trigger — glassmorphism pill */}
       <button
         className={`cb-trigger${open ? " cb-trigger--open" : ""}`}
         onClick={() => setOpen((v) => !v)}
@@ -182,6 +182,7 @@ export default function ChatBot() {
         <svg className="cb-trigger-icon cb-trigger-icon--chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>
+        <span className="cb-trigger-label">Ask AI</span>
         <svg className="cb-trigger-icon cb-trigger-icon--close" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
           <path d="M18 6 6 18M6 6l12 12" />
         </svg>
