@@ -30,12 +30,14 @@ import Spline from "./components/spline";
 import Dash from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import Transition from "./components/transition";
+import { useAnimatedFavicon } from "./hooks/useAnimatedFavicon";
 
 
 const THEME_COUNT = 7;
 
 
 export default function App() {
+  useAnimatedFavicon();
 
   const [themeIndex, setThemeIndex] = useState(0);
 
