@@ -1531,9 +1531,36 @@ export default function LandingSections() {
         </form>
       </section>
 
-      <footer className="site-footer">
-        <p>Srijon Karmakar</p>
-        <span>Full Stack Developer based in Kolkata, India.</span>
+      <div className="footer-bridge" aria-hidden="true" />
+
+      <footer className="mega-footer">
+        {/* Accent line */}
+        <div className="mega-footer__accent" aria-hidden="true" />
+
+        {/* Top bar */}
+        <div className="mega-footer__top">
+          <div className="mega-footer__available">
+            <span className="mega-footer__dot" aria-hidden="true" />
+            Open to opportunities
+          </div>
+          <nav className="mega-footer__nav" aria-label="Footer navigation">
+            <a href="https://www.linkedin.com/in/srijon-karmakar/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Email</a>
+            <a href="https://github.com/srijon57" target="_blank" rel="noreferrer">GitHub</a>
+          </nav>
+        </div>
+
+        {/* Giant name display */}
+        <div className="mega-footer__name" aria-label="Srijon Karmakar">
+          <span className="mega-footer__name-fill">SRIJON</span>
+          <span className="mega-footer__name-stroke">KARMAKAR</span>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="mega-footer__bottom">
+          <span>© 2026 Srijon Karmakar</span>
+          <span className="mega-footer__role">Full Stack Developer · Kolkata, India</span>
+        </div>
       </footer>
     </div>
   );
