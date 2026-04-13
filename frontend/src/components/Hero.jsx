@@ -34,10 +34,6 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // Skip heavy 3D scene on mobile — WebGL is GPU-constrained on phones
-    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
-    if (isMobile) return;
-
     let idleId;
     let timeoutId;
 
