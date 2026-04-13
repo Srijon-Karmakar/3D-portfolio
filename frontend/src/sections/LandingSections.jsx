@@ -1,7 +1,13 @@
+
+
+// // 2nd attempt: 
 // import { useEffect, useRef, useState } from "react";
 // import { gsap } from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
 // import { insertContactMessage } from "../lib/supabaseContact";
 // import "./LandingSections.css";
+
+// gsap.registerPlugin(ScrollTrigger);
 
 // const experience = [
 //   {
@@ -10,9 +16,9 @@
 //     role: "Full Stack Developer",
 //     period: "April 2025 - Present",
 //     points: [
-//       "Designed and maintained full-stack web applications with React.js and Node.js, focused on scalable architecture and clean APIs.",
-//       "Built REST APIs with MongoDB, authentication, role-based access control, and data validation for production-ready features.",
-//       "Handled delivery end-to-end from requirement analysis to deployment, improving reliability, load time, and component reuse.",
+//       "Built scalable full-stack applications using React.js and Node.js.",
+//       "Designed REST APIs with MongoDB, authentication, role-based access control, and validation.",
+//       "Delivered features end-to-end from requirement analysis to deployment and optimization.",
 //     ],
 //   },
 //   {
@@ -21,48 +27,55 @@
 //     role: "Python Developer",
 //     period: "November 2024 - January 2025",
 //     points: [
-//       "Developed Django-based applications with dashboard-heavy backend workflows and data-driven service layers.",
-//       "Worked with product, customer success, and finance teams to build survey workflows and backend logic.",
+//       "Developed Django-based applications and backend workflows for dashboard-driven systems.",
+//       "Worked across teams to implement survey workflows and backend business logic.",
 //     ],
 //   },
 // ];
 
-// const skillGroups = [
-//   {
-//     title: "Languages",
-//     icon: "code",
-//     items: ["C", "Java", "Python", "JavaScript", "HTML", "CSS"],
-//   },
-//   {
-//     title: "Frontend",
-//     icon: "window",
-//     items: ["React.js", "Responsive UI", "UI/UX", "Component systems", "Mobile-first layouts"],
-//   },
-//   {
-//     title: "Backend",
-//     icon: "stack",
-//     items: ["Node.js", "Django", "NestJS", "REST APIs", "Authentication", "Role-based access"],
-//   },
-//   {
-//     title: "Data",
-//     icon: "grid",
-//     items: ["MySQL", "PostgreSQL", "MongoDB", "Data validation", "Dashboard workflows"],
-//   },
+// const skillRailOne = [
+//   { label: "React.js", icon: "window" },
+//   { label: "Node.js", icon: "stack" },
+//   { label: "JavaScript", icon: "code" },
+//   { label: "Python", icon: "code" },
+//   { label: "MongoDB", icon: "grid" },
+//   { label: "REST APIs", icon: "stack" },
+//   { label: "Authentication", icon: "shield" },
+//   { label: "UI/UX", icon: "spark" },
+//   { label: "Responsive Design", icon: "window" },
+//   { label: "Django", icon: "stack" },
+//   { label: "NestJS", icon: "stack" },
+//   { label: "PostgreSQL", icon: "grid" },
+// ];
+
+// const skillRailTwo = [
+//   { label: "HTML", icon: "code" },
+//   { label: "CSS", icon: "spark" },
+//   { label: "Java", icon: "code" },
+//   { label: "C", icon: "code" },
+//   { label: "MySQL", icon: "grid" },
+//   { label: "RBAC", icon: "shield" },
+//   { label: "Data Validation", icon: "shield" },
+//   { label: "Full Stack", icon: "stack" },
+//   { label: "Frontend", icon: "window" },
+//   { label: "Backend", icon: "stack" },
+//   { label: "API Integration", icon: "stack" },
+//   { label: "System Design", icon: "grid" },
 // ];
 
 // const projects = [
 //   {
-//     title: "Cloud-based Code Editor Online",
+//     title: "Cloud-based Code Editor",
 //     role: "Full Stack Developer",
 //     description:
-//       "Built a React + Node.js online editor for writing, learning, and practising code with secure authentication and database-backed storage.",
-//     tags: ["React", "Node.js", "Auth", "Database"],
+//       "Cloud-based code editor with authentication, backend execution, and persistent storage.",
+//     tags: ["React", "Node.js", "Auth", "Storage"],
 //   },
 //   {
 //     title: "Online Tool System",
 //     role: "Full Stack Developer",
 //     description:
-//       "Created a media utility platform with backend processing, URL validation, and secure file handling for downloads.",
+//       "Media processing platform with secure file handling and URL validation.",
 //     tags: ["React", "Node.js", "Processing", "Validation"],
 //     href: "https://toolit-y4pd.onrender.com/",
 //   },
@@ -70,70 +83,82 @@
 //     title: "Online Testing Portal",
 //     role: "Full Stack Developer",
 //     description:
-//       "Developed a NestJS-based proctoring system for tests and assignments with role-based authentication and secure data handling.",
-//     tags: ["NestJS", "Proctoring", "Roles", "Security"],
+//       "Online testing platform with proctoring and role-based access control.",
+//     tags: ["NestJS", "Proctoring", "RBAC", "Security"],
 //     href: "https://snv-etester.onrender.com/",
 //   },
 //   {
 //     title: "Restaurant Website",
-//     role: "Other Project",
+//     role: "Project",
 //     description:
-//       "A modern interactive restaurant site built with React and Node.js with a stronger focus on presentation and user flow.",
-//     tags: ["React", "Node.js", "Brand UI"],
+//       "Responsive restaurant website built for modern presentation and smooth user flow.",
+//     tags: ["React", "Node.js", "UI", "Responsive"],
 //     href: "https://resturang.onrender.com/",
 //   },
 //   {
 //     title: "Agency Portfolio",
-//     role: "Other Project",
+//     role: "Project",
 //     description:
-//       "Dynamic portfolio experience for an agency, built to present services and brand identity with a sharper visual rhythm.",
-//     tags: ["Portfolio", "Motion", "Presentation"],
+//       "Dynamic portfolio website designed to present services, projects, and brand identity.",
+//     tags: ["Portfolio", "Branding", "UI", "Frontend"],
 //     href: "https://www.senevon.in/",
 //   },
 //   {
 //     title: "Cricket Game App & Web",
-//     role: "Other Project",
+//     role: "Project",
 //     description:
-//       "3D cricket work using three.js, TypeScript, cannon-es, and Blender for a more immersive interaction layer.",
+//       "3D cricket experience built with Three.js, TypeScript, Cannon-es, and Blender.",
 //     tags: ["Three.js", "TypeScript", "Cannon-es", "Blender"],
 //     href: "https://pov-cricket.onrender.com/",
 //   },
 //   {
 //     title: "Sports Management System",
-//     role: "Other Project",
+//     role: "Project",
 //     description:
-//       "Multi-role ERP-style system for managing sports clubs with admin-facing workflows and structured control.",
-//     tags: ["ERP", "Multi-role", "Management"],
+//       "Multi-role ERP-style system for managing sports clubs and operational workflows.",
+//     tags: ["ERP", "Multi-role", "Management", "System Design"],
 //     href: "https://esm-9x3l.onrender.com/",
 //   },
 // ];
 
+// const PROJECT_ACCENTS = [
+//   "linear-gradient(135deg, #6d28d9, #8b5cf6)",
+//   "linear-gradient(135deg, #4f46e5, #7c3aed)",
+//   "linear-gradient(135deg, #7c3aed, #c084fc)",
+//   "linear-gradient(135deg, #5b21b6, #8b5cf6)",
+//   "linear-gradient(135deg, #6d28d9, #a855f7)",
+//   "linear-gradient(135deg, #4338ca, #7c3aed)",
+//   "linear-gradient(135deg, #7c3aed, #a78bfa)",
+// ];
+
 // const services = [
-//   "Full-stack web apps with React, Node.js, or Django",
-//   "Responsive landing pages and portfolio websites",
-//   "Dashboard and workflow interfaces with clean UX",
-//   "Authentication, API integration, and role-based systems",
-// ];
-
-// const proofCards = [
 //   {
-//     title: "Cross-functional Delivery",
-//     text: "Worked closely with designers, product stakeholders, customer success, and finance teams to turn requirements into shipping features.",
+//     title: "Full-Stack Dev",
+//     description:
+//       "End-to-end web applications built with React.js, Node.js, and Django. From system architecture to deployment, I own the full lifecycle.",
+//     tags: ["React.js", "Node.js", "Django", "REST APIs", "PostgreSQL"],
+//     image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80&fit=crop",
 //   },
 //   {
-//     title: "Production Mindset",
-//     text: "Experience includes architecture, APIs, validation, deployment, performance improvement, and reusable component design.",
-//   },
-// ];
-
-// const writingCards = [
-//   {
-//     title: "Workshops & Exhibitions",
-//     text: "Interested in learning through workshops, exhibitions, and practical exposure outside the screen.",
+//     title: "Backend Systems",
+//     description:
+//       "Scalable server-side architecture, REST API design, database modelling, and role-based authentication built for real production loads.",
+//     tags: ["Node.js", "Express", "PostgreSQL", "MongoDB", "JWT"],
+//     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&q=80&fit=crop",
 //   },
 //   {
-//     title: "Open Source & Design",
-//     text: "Explores open-source contributions and graphic design to keep both code quality and visual taste evolving.",
+//     title: "UI & Interfaces",
+//     description:
+//       "Clean, responsive dashboards and workflow interfaces with a strong focus on performance, usability, and modern interaction design.",
+//     tags: ["React.js", "Tailwind", "GSAP", "Framer Motion"],
+//     image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=900&q=80&fit=crop",
+//   },
+//   {
+//     title: "Data & Automation",
+//     description:
+//       "Data-driven applications, visualisation dashboards, and Python-based automation workflows grounded in a Data Science foundation.",
+//     tags: ["Python", "Data Science", "Django", "Automation"],
+//     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80&fit=crop",
 //   },
 // ];
 
@@ -192,6 +217,23 @@
 //         <path d="m12 24 20-10 20 10-20 10-20-10Z" />
 //         <path d="m12 34 20 10 20-10" />
 //         <path d="m12 42 20 10 20-10" />
+//       </svg>
+//     );
+//   }
+
+//   if (type === "shield") {
+//     return (
+//       <svg viewBox="0 0 64 64" aria-hidden="true">
+//         <path d="M32 10 48 16v13c0 11-7 18-16 25-9-7-16-14-16-25V16l16-6Z" />
+//         <path d="m24 32 5 5 11-12" />
+//       </svg>
+//     );
+//   }
+
+//   if (type === "spark") {
+//     return (
+//       <svg viewBox="0 0 64 64" aria-hidden="true">
+//         <path d="M32 10 36 24 50 28 36 32 32 46 28 32 14 28 28 24 32 10Z" />
 //       </svg>
 //     );
 //   }
@@ -257,60 +299,188 @@
 
 //   useEffect(() => {
 //     const root = rootRef.current;
-//     if (!root) {
-//       return undefined;
-//     }
+//     if (!root) return undefined;
 
 //     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+//     // Instant reveal for accessibility — no animation at all
 //     if (prefersReducedMotion) {
+//       root.querySelectorAll(".js-reveal").forEach((el) => {
+//         gsap.set(el, { opacity: 1, y: 0, x: 0, scale: 1, clearProps: "transform" });
+//       });
 //       return undefined;
 //     }
 
-//     const revealGroups = root.querySelectorAll(".js-reveal-group");
-//     const observer = new IntersectionObserver(
-//       (entries) => {
-//         entries.forEach((entry) => {
-//           if (!entry.isIntersecting) {
-//             return;
+//     // gsap.context() scopes all animations + ScrollTriggers to root.
+//     // ctx.revert() kills everything on unmount — no manual tracking needed.
+//     let motionObserver;
+//     const ctx = gsap.context(() => {
+
+//       const mm = gsap.matchMedia();
+
+//       mm.add(
+//         { mobile: "(max-width: 767px)", desktop: "(min-width: 768px)" },
+//         (context) => {
+//           const { mobile } = context.conditions;
+
+//           const Y    = mobile ? 24 : 44;
+//           const dur  = mobile ? 0.9 : 1.1;
+//           const stgr = mobile ? 0.1 : 0.13;
+//           const ease = "power3.out";
+//           // On mobile trigger a bit earlier (element barely in view is enough)
+//           const start = mobile ? "top 92%" : "top 85%";
+
+//           // ── Core reveal: each .js-reveal-group triggers its children ──
+//           // CSS hides .js-reveal elements; GSAP animates them in when their
+//           // parent group enters the viewport, with a stagger between items.
+//           gsap.utils.toArray(".js-reveal-group", root).forEach((group) => {
+//             const items = gsap
+//               .utils
+//               .toArray(".js-reveal", group)
+//               .filter((item) => !item.classList.contains("proj-card") && !item.classList.contains("timeline-item"));
+//             if (!items.length) return;
+
+//             gsap.fromTo(
+//               items,
+//               { opacity: 0, y: Y },
+//               {
+//                 opacity: 1,
+//                 y: 0,
+//                 duration: dur,
+//                 stagger: stgr,
+//                 ease,
+//                 scrollTrigger: { trigger: group, start, once: true },
+//               }
+//             );
+//           });
+
+//           // ── Project cards: also animate scale ─────────────────
+//           const projectCards = gsap.utils.toArray(".proj-card", root);
+//           const projectGrid = root.querySelector(".proj-grid");
+//           if (projectCards.length && projectGrid) {
+//             gsap.fromTo(
+//               projectCards,
+//               { opacity: 0, y: Y, scale: 0.96 },
+//               {
+//                 opacity: 1,
+//                 y: 0,
+//                 scale: 1,
+//                 duration: dur,
+//                 stagger: stgr,
+//                 ease,
+//                 overwrite: "auto",
+//                 scrollTrigger: {
+//                   trigger: projectGrid,
+//                   start,
+//                   once: true,
+//                 },
+//               }
+//             );
 //           }
 
-//           const targets = entry.target.querySelectorAll(".js-reveal");
-//           gsap.fromTo(
-//             targets,
-//             { y: 26, opacity: 0 },
-//             {
-//               y: 0,
-//               opacity: 1,
-//               duration: 0.72,
-//               stagger: 0.08,
-//               ease: "power2.out",
-//               overwrite: "auto",
-//             }
-//           );
+//           // ── Timeline items: slide from alternating sides on desktop ──
+//           const timelineItems = gsap.utils.toArray(".timeline-item", root);
+//           const experienceSection = root.querySelector("#experience");
+//           if (timelineItems.length && experienceSection) {
+//             gsap.fromTo(
+//               timelineItems,
+//               {
+//                 opacity: 0,
+//                 y: mobile ? Y : 0,
+//                 x: (_, itemIndex) => (mobile ? 0 : itemIndex % 2 === 0 ? -30 : 30),
+//               },
+//               {
+//                 opacity: 1,
+//                 y: 0,
+//                 x: 0,
+//                 duration: dur,
+//                 stagger: stgr,
+//                 ease,
+//                 overwrite: "auto",
+//                 scrollTrigger: {
+//                   trigger: experienceSection,
+//                   start,
+//                   once: true,
+//                 },
+//               }
+//             );
+//           }
+//         }
+//       );
 
-//           observer.unobserve(entry.target);
+//       // ── Glyph floats — continuous idle animation ─────────────
+//       gsap.utils.toArray(".js-glyph-float", root).forEach((glyph, i) =>
+//         gsap.to(glyph, {
+//           y:        i % 2 === 0 ? -10 : 10,
+//           rotation: i % 2 === 0 ? -5  : 5,
+//           duration: 4.8 + i * 0.5,
+//           repeat:   -1,
+//           yoyo:     true,
+//           ease:     "sine.inOut",
+//         })
+//       );
+
+//       // ── Service cards: sticky stacking + scroll-scrub scale ──
+//       const serviceWraps = gsap.utils.toArray(".service-wrap", root);
+
+//       serviceWraps.slice(0, -1).forEach((wrap, i) => {
+//         const card     = wrap.querySelector(".service-card");
+//         const nextWrap = serviceWraps[i + 1];
+//         if (!card || !nextWrap) return;
+
+//         gsap.to(card, {
+//           scale: 0.97,
+//           filter: "brightness(0.92)",
+//           ease: "none",
+//           transformOrigin: "center top",
+//           scrollTrigger: {
+//             trigger: nextWrap,
+//             start: "top 88%",
+//             end: "top 30%",
+//             scrub: 0.6,
+//           },
 //         });
-//       },
-//       { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
-//     );
+//       });
 
-//     revealGroups.forEach((group) => observer.observe(group));
+//       const serviceCards = gsap.utils.toArray(".service-card", root);
+//       gsap.set(serviceCards, { opacity: 0, y: 52, scale: 0.98, transformOrigin: "center top" });
 
-//     const glyphs = root.querySelectorAll(".js-glyph-float");
-//     const glyphAnimations = Array.from(glyphs).map((glyph, index) =>
-//       gsap.to(glyph, {
-//         y: index % 2 === 0 ? -10 : 10,
-//         rotation: index % 2 === 0 ? -5 : 5,
-//         duration: 4.8 + index * 0.5,
-//         repeat: -1,
-//         yoyo: true,
-//         ease: "sine.inOut",
-//       })
-//     );
+//       ScrollTrigger.batch(serviceCards, {
+//         start: "top 90%",
+//         once:  true,
+//         onEnter: (batch) =>
+//           gsap.to(batch, {
+//             opacity: 1,
+//             y:       0,
+//             scale:   1,
+//             duration: 0.95,
+//             ease:    "power3.out",
+//             stagger: { each: 0.1, from: "start" },
+//           }),
+//       });
+
+//       motionObserver = new IntersectionObserver(
+//         (entries) => {
+//           entries.forEach((entry) => {
+//             entry.target.dataset.inview = entry.isIntersecting ? "true" : "false";
+//           });
+//         },
+//         {
+//           threshold: 0.01,
+//           rootMargin: "120px 0px 120px 0px",
+//         }
+//       );
+
+//       gsap.utils.toArray(".js-pausable-motion", root).forEach((node) => {
+//         node.dataset.inview = "true";
+//         motionObserver.observe(node);
+//       });
+
+//     }, root);
 
 //     return () => {
-//       observer.disconnect();
-//       glyphAnimations.forEach((animation) => animation.kill());
+//       motionObserver?.disconnect();
+//       ctx.revert();
 //     };
 //   }, []);
 
@@ -329,41 +499,45 @@
 //           <span className="theme-toggle-track">
 //             <span className="theme-toggle-thumb" />
 //           </span>
-//           <span className="theme-toggle-label">{theme === "light" ? "Black mode" : "White mode"}</span>
+//           <span className="theme-toggle-label">
+//             {theme === "light" ? "Black mode" : "White mode"}
+//           </span>
 //         </button>
 //       </div>
 
 //       <section className="portfolio-section portfolio-section-intro js-reveal-group" id="about">
 //         <div className="section-heading js-reveal">
 //           <span className="section-kicker">About</span>
-//           <h2 className="section-title">Designing with purpose, building with precision.</h2>
+//           <h2 className="section-title">I build scalable digital products.</h2>
 //           <p className="section-copy">
-//             Full Stack Developer specializing in high-performance web applications, 
-//             scalable architectures, and refined user experiences with a focus on 
-//             clean code and mobile-first logic.
+//             Full Stack Developer with hands-on experience building scalable web applications
+//             using React.js, Node.js, and modern backend systems. Focused on delivering
+//             production-ready solutions with clean architecture, optimized performance,
+//             and strong user experience across devices.
 //           </p>
 //         </div>
 
 //         <div className="about-layout">
 //           <article className="about-summary-card js-reveal">
-//             <div className="about-photo-wrap">
-//               <img
-//                 className="about-photo"
-//                 src="/me.jpg"
-//                 alt="Srijon Karmakar"
-//                 loading="lazy"
-//               />
-//               <div className="about-photo-glyph glyph-card js-glyph-float" aria-hidden="true">
-//                 <Glyph type="window" />
+//             <div className="about-photo-deck">
+//               <div className="about-photo-stack">
+//                 <img
+//                   className="about-photo-stacked"
+//                   src="/me.jpg"
+//                   alt="Srijon Karmakar"
+//                   loading="lazy"
+//                   decoding="async"
+//                 />
 //               </div>
 //             </div>
 
 //             <div className="about-summary-copy">
-//               <p className="about-meta">B.Tech in Computer Science & Engineering, Data Science</p>
+//               <p className="about-meta">
+//                 B.Tech in Computer Science & Engineering, Data Science
+//               </p>
 //               <p className="about-text">
-//                 Brainware University graduate with an 8.6 GPA, building user interfaces
-//                 that stay expressive without becoming heavy. The focus is always clean UX,
-//                 responsive layout behavior, and dependable implementation.
+//                 Based in Kolkata. Computer Science graduate with a focus on Data Science.
+//                 I work across frontend and backend to create clean, efficient, and scalable systems.
 //               </p>
 //             </div>
 //           </article>
@@ -371,93 +545,134 @@
 //           <div className="fact-grid">
 //             <article className="info-card js-reveal">
 //               <p className="info-value">2025</p>
-//               <p className="info-text">Graduated in July 2025 with a Data Science-focused CSE degree.</p>
+//               <p className="info-text">Graduated in July 2025 from Brainware University.</p>
 //             </article>
 //             <article className="info-card js-reveal">
 //               <p className="info-value">8.6 GPA</p>
-//               <p className="info-text">Strong academic foundation backed by practical product and engineering work.</p>
+//               <p className="info-text">Strong academic foundation in Computer Science and Data Science.</p>
 //             </article>
 //             <article className="info-card js-reveal">
-//               <p className="info-value">UI + Logic</p>
-//               <p className="info-text">Comfortable shaping both interface detail and backend architecture in the same build.</p>
+//               <p className="info-value">Full Stack</p>
+//               <p className="info-text">Builds complete systems from interface to backend logic and database design.</p>
 //             </article>
 //           </div>
 //         </div>
 //       </section>
 
-//       <section className="portfolio-section js-reveal-group" id="skills">
-//         <div className="section-heading js-reveal">
-//           <span className="section-kicker">Skills</span>
-//           <h2 className="section-title">A modern stack for high-performance products.</h2>
-//           <p className="section-copy">
-//             Technical expertise focused on building robust, scalable, and user-centric 
-//             digital solutions using industry-standard tools and frameworks.
-//           </p>
-//         </div>
+     
 
-//         <div className="skills-grid-landing">
-//           {skillGroups.map((group) => (
-//             <article className="panel-card skill-panel js-reveal" key={group.title}>
-//               <div className="skill-panel-top">
-//                 <div className="glyph-card js-glyph-float" aria-hidden="true">
-//                   <Glyph type={group.icon} />
-//                 </div>
-//                 <h3>{group.title}</h3>
-//               </div>
 
-//               <div className="chip-wrap">
-//                 {group.items.map((item) => (
-//                   <span className="skill-chip" key={item}>
-//                     {item}
-//                   </span>
-//                 ))}
-//               </div>
-//             </article>
-//           ))}
-//         </div>
-//       </section>
 
-//       <section className="portfolio-section portfolio-section-featured js-reveal-group" id="projects">
-//         <div className="section-heading js-reveal">
+// <section className="portfolio-section js-reveal-group" id="skills">
+//   <div className="section-heading js-reveal">
+//     <span className="section-kicker">Skills</span>
+//     <h2 className="section-title">Tools I work with.</h2>
+//     <p className="section-copy">
+//       A focused stack for building modern web applications.
+//     </p>
+//   </div>
+
+//   <div className="skills-rail-wrap js-reveal">
+//     <div className="skills-rail-fade skills-rail-fade-left" aria-hidden="true" />
+//     <div className="skills-rail-fade skills-rail-fade-right" aria-hidden="true" />
+
+//     <div className="skills-rail skills-rail-one">
+//       <div className="skills-rail-track js-pausable-motion">
+//         {[...skillRailOne, ...skillRailOne].map((item, index) => (
+//           <span className="skills-rail-chip" key={`rail-one-${item.label}-${index}`}>
+//             <span className="skills-rail-chip-icon" aria-hidden="true">
+//               <Glyph type={item.icon} />
+//             </span>
+//             <span>{item.label}</span>
+//           </span>
+//         ))}
+//       </div>
+//     </div>
+
+//     <div className="skills-rail skills-rail-two">
+//       <div className="skills-rail-track js-pausable-motion">
+//         {[...skillRailTwo, ...skillRailTwo].map((item, index) => (
+//           <span className="skills-rail-chip" key={`rail-two-${item.label}-${index}`}>
+//             <span className="skills-rail-chip-icon" aria-hidden="true">
+//               <Glyph type={item.icon} />
+//             </span>
+//             <span>{item.label}</span>
+//           </span>
+//         ))}
+//       </div>
+//     </div>
+//   </div>
+// </section>
+
+
+
+
+//       <section className="portfolio-section portfolio-section-featured proj-section js-reveal-group" id="projects">
+//         <div className="section-heading proj-header js-reveal">
 //           <span className="section-kicker">Projects</span>
-//           <h2 className="section-title">Selected works and engineering experiments.</h2>
+//           <h2 className="section-title">Selected projects.</h2>
 //           <p className="section-copy">
-//             A showcase of technical challenges solved through clean code, 
-//             innovative design, and practical software engineering principles.
+//             Real-world applications built with performance, scalability, and usability in mind.
 //           </p>
 //         </div>
 
-//         <div className="project-grid-landing">
+//         <div className="proj-grid">
 //           {projects.map((project, index) => (
-//             <article className="project-card-landing js-reveal" key={project.title}>
-//               <div className="project-card-top">
-//                 <div>
-//                   <div className="project-index">0{index + 1}</div>
-//                   <h3>{project.title}</h3>
+//             <article
+//               className={`proj-card js-reveal${index === 0 ? " proj-card--featured" : ""}`}
+//               key={project.title}
+//             >
+//               {/* Gradient top accent */}
+//               <div className="proj-card__accent" style={{ background: PROJECT_ACCENTS[index] }} />
+
+//               {/* Watermark number */}
+//               <span className="proj-card__watermark" aria-hidden="true">
+//                 {String(index + 1).padStart(2, "0")}
+//               </span>
+
+//               <div className="proj-card__inner">
+//                 {/* Top row: index + ext link */}
+//                 <div className="proj-card__top">
+//                   <span className="proj-card__num">{String(index + 1).padStart(2, "0")}</span>
+//                   {project.href && (
+//                     <a
+//                       className="proj-card__ext"
+//                       href={project.href}
+//                       target="_blank"
+//                       rel="noreferrer"
+//                       aria-label={`Open ${project.title}`}
+//                       onClick={(e) => e.stopPropagation()}
+//                     >
+//                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+//                         <path d="M7 17L17 7M17 7H7M17 7v10" />
+//                       </svg>
+//                     </a>
+//                   )}
 //                 </div>
-//                 <div className="glyph-card glyph-card-small js-glyph-float" aria-hidden="true">
-//                   <Glyph type="grid" />
+
+//                 {/* Body */}
+//                 <div className="proj-card__body">
+//                   <p className="proj-card__role">{project.role}</p>
+//                   <h3 className="proj-card__title">{project.title}</h3>
+//                   <p className="proj-card__desc">{project.description}</p>
+//                 </div>
+
+//                 {/* Footer: tags + CTA */}
+//                 <div className="proj-card__footer">
+//                   <div className="proj-card__tags">
+//                     {project.tags.map((tag) => (
+//                       <span key={tag}>{tag}</span>
+//                     ))}
+//                   </div>
+//                   {project.href ? (
+//                     <a className="proj-card__link" href={project.href} target="_blank" rel="noreferrer">
+//                       Open project <span className="proj-card__arrow">↗</span>
+//                     </a>
+//                   ) : (
+//                     <span className="proj-card__link proj-card__link--muted">Link on request</span>
+//                   )}
 //                 </div>
 //               </div>
-
-//               <p className="project-role">{project.role}</p>
-//               <p>{project.description}</p>
-
-//               <div className="chip-wrap">
-//                 {project.tags.map((item) => (
-//                   <span className="skill-chip skill-chip-strong" key={item}>
-//                     {item}
-//                   </span>
-//                 ))}
-//               </div>
-
-//               {project.href ? (
-//                 <a className="project-link" href={project.href} target="_blank" rel="noreferrer">
-//                   Open project
-//                 </a>
-//               ) : (
-//                 <span className="project-link project-link-muted">Link available on request</span>
-//               )}
 //             </article>
 //           ))}
 //         </div>
@@ -466,10 +681,9 @@
 //       <section className="portfolio-section js-reveal-group" id="experience">
 //         <div className="section-heading js-reveal">
 //           <span className="section-kicker">Experience</span>
-//           <h2 className="section-title">Professional journey and technical milestones.</h2>
+//           <h2 className="section-title">Experience.</h2>
 //           <p className="section-copy">
-//             A timeline of professional growth and contributions to impactful 
-//             software projects across diverse industries.
+//             Building production systems and delivering real-world applications.
 //           </p>
 //         </div>
 
@@ -495,33 +709,65 @@
 //         </div>
 //       </section>
 
-//       <section className="portfolio-section js-reveal-group" id="services">
-//         <div className="section-heading js-reveal">
-//           <span className="section-kicker">Services</span>
-//           <h2 className="section-title">Bringing digital visions to life.</h2>
-//           <p className="section-copy">
-//             Comprehensive development services tailored to modern business 
-//             needs and high user expectations.
-//           </p>
+//       <section className="services-section" id="services">
+//         <h2 className="sr-only">What I do</h2>
+
+//         {/* Marquee rail */}
+//         <div className="services-marquee" aria-hidden="true">
+//           <div className="services-marquee-track js-pausable-motion">
+//             {[...services, ...services].map((s, i) => (
+//               <span key={`${s.title}-${i}`} className="services-marquee-item">
+//                 {s.title}
+//                 <span className="services-marquee-sep" aria-hidden="true">·</span>
+//               </span>
+//             ))}
+//           </div>
 //         </div>
 
-//         <div className="service-list">
-//           {services.map((service) => (
-//             <article className="service-item js-reveal" key={service}>
-//               <span className="service-dot" aria-hidden="true" />
-//               <p>{service}</p>
-//             </article>
+//         {/* Sticky stacking cards */}
+//         <div className="services-stack">
+//           {services.map((service, index) => (
+//             <div
+//               className="service-wrap"
+//               key={service.title}
+//               style={{ "--ci": index, zIndex: index + 1 }}
+//             >
+//               <article className="service-card">
+//                 <div className="service-card-content">
+//                   <div className="service-card-left">
+//                     <span className="service-card-num">0{index + 1}</span>
+//                     <h3 className="service-card-title">{service.title}</h3>
+//                     <p className="service-card-desc">{service.description}</p>
+//                     <div className="service-card-tags">
+//                       {service.tags.map((tag) => (
+//                         <span key={tag} className="service-card-tag">{tag}</span>
+//                       ))}
+//                     </div>
+//                   </div>
+//                   <div className="service-card-right">
+//                     <img
+//                       className="service-card-img"
+//                       src={service.image}
+//                       alt={service.title}
+//                       loading="lazy"
+//                       decoding="async"
+//                       fetchPriority="low"
+//                     />
+//                   </div>
+//                 </div>
+//               </article>
+//             </div>
 //           ))}
 //         </div>
 //       </section>
 
-//       <section className="portfolio-section js-reveal-group" id="testimonials">
+
+//       {/* <section className="portfolio-section js-reveal-group" id="approach">
 //         <div className="section-heading js-reveal">
-//           <span className="section-kicker">Proof</span>
-//           <h2 className="section-title">Commitment to excellence and collaboration.</h2>
+//           <span className="section-kicker">Approach</span>
+//           <h2 className="section-title">How I work.</h2>
 //           <p className="section-copy">
-//             Validated experience in delivering quality software and working 
-//             effectively within cross-functional teams to ship successful products.
+//             Practical development with a strong focus on clarity, delivery, and system quality.
 //           </p>
 //         </div>
 
@@ -538,15 +784,15 @@
 //             </article>
 //           ))}
 //         </div>
-//       </section>
+//       </section> */}
 
-//       <section className="portfolio-section js-reveal-group" id="blog">
+
+//       {/* <section className="portfolio-section js-reveal-group" id="blog">
 //         <div className="section-heading js-reveal">
-//           <span className="section-kicker">Learning</span>
-//           <h2 className="section-title">Explorations beyond the codebase.</h2>
+//           <span className="section-kicker">Beyond Code</span>
+//           <h2 className="section-title">Beyond code.</h2>
 //           <p className="section-copy">
-//             Continuous learning and creative pursuits that inform my technical 
-//             and design perspective, keeping the work fresh and innovative.
+//             Learning, design, and continuous exploration shape the way I build.
 //           </p>
 //         </div>
 
@@ -559,16 +805,16 @@
 //             </article>
 //           ))}
 //         </div>
-//       </section>
+//       </section> */}
 
 //       <section className="portfolio-section cta-panel js-reveal-group" id="cta">
 //         <div className="cta-layout">
 //           <div className="section-heading js-reveal">
-//             <span className="section-kicker">CTA</span>
-//             <h2 className="section-title">Let's build something exceptional.</h2>
+//             <span className="section-kicker">Contact</span>
+//             <h2 className="section-title">Let’s build something great.</h2>
 //             <p className="section-copy">
-//               Transitioning ideas into production-ready reality through 
-//               distinguished design and engineering excellence.
+//               Open to full-time roles, freelance projects, and collaborations where I can
+//               contribute to building scalable and impactful digital products.
 //             </p>
 //           </div>
 
@@ -581,7 +827,7 @@
 
 //         <div className="cta-actions js-reveal">
 //           <a className="cta-button cta-button-primary" href="#contact">
-//             Start a project
+//             Start a conversation
 //           </a>
 //           <a className="cta-button" href="/Stats">
 //             View stats
@@ -591,11 +837,11 @@
 
 //       <section className="portfolio-section js-reveal-group" id="contact">
 //         <div className="section-heading js-reveal">
-//           <span className="section-kicker">Contact</span>
-//           <h2 className="section-title">Start a conversation.</h2>
+//           <span className="section-kicker">Get in touch</span>
+//           <h2 className="section-title">Get in touch.</h2>
 //           <p className="section-copy">
-//             Reach out to discuss collaborations, upcoming projects, 
-//             or technical consulting. I'm always open to new opportunities.
+//             Feel free to reach out for opportunities, collaborations, or project discussions.
+//             I’m available for full-time roles and freelance work.
 //           </p>
 //         </div>
 
@@ -634,7 +880,7 @@
 
 //           <textarea
 //             rows="5"
-//             placeholder="Tell me about the project, timeline, or what you need built."
+//             placeholder="Tell me about the project, role, or collaboration."
 //             value={form.message}
 //             onChange={(event) => setField("message", event.target.value)}
 //           />
@@ -651,9 +897,82 @@
 //         </form>
 //       </section>
 
-//       <footer className="site-footer">
-//         <p>Srijon Karmakar</p>
-//         <span>Full Stack Developer based in Kolkata, India.</span>
+//       <footer className="mega-footer">
+
+//         {/* ── Dark rounded card with marquee ── */}
+//         <div className="mega-footer__dark">
+//           <div className="mega-footer__ticker" aria-hidden="true">
+//             <div className="mega-footer__ticker-track js-pausable-motion">
+//               {[...Array(2)].map((_, i) => (
+//                 <span key={i} className="mega-footer__ticker-group">
+//                   <span className="mega-footer__ticker-item">Hire me ↗</span>
+//                   <span className="mega-footer__ticker-sep">·</span>
+//                   <span className="mega-footer__ticker-item">Let's work together ↗</span>
+//                   <span className="mega-footer__ticker-sep">·</span>
+//                   <span className="mega-footer__ticker-item">Open to opportunities ↗</span>
+//                   <span className="mega-footer__ticker-sep">·</span>
+//                   <span className="mega-footer__ticker-item">Get in touch ↗</span>
+//                   <span className="mega-footer__ticker-sep">·</span>
+//                 </span>
+//               ))}
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* ── Light footer body ── */}
+//         <div className="mega-footer__light">
+
+//           {/* 4-column grid */}
+//           <div className="mega-footer__cols">
+//             <div className="mega-footer__col">
+//               <p className="mega-footer__col-heading">Portfolio</p>
+//               <a href="#projects">Projects</a>
+//               <a href="#experience">Experience</a>
+//               <a href="#about">About</a>
+//               <a href="#services">Services</a>
+//             </div>
+//             <div className="mega-footer__col">
+//               <p className="mega-footer__col-heading">Skills</p>
+//               <a href="#skills">Frontend</a>
+//               <a href="#skills">Backend</a>
+//               <a href="#skills">Databases</a>
+//               <a href="#skills">3D &amp; Motion</a>
+//             </div>
+//             <div className="mega-footer__col">
+//               <p className="mega-footer__col-heading">Connect</p>
+//               <a href="https://www.linkedin.com/in/srijon-karmakar/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+//               <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Email ↗</a>
+//               <a href="https://github.com/srijon57" target="_blank" rel="noreferrer">GitHub ↗</a>
+//             </div>
+//             <div className="mega-footer__col">
+//               <p className="mega-footer__col-heading">Availability</p>
+//               <span className="mega-footer__available">
+//                 <span className="mega-footer__dot" aria-hidden="true" />
+//                 Open to work
+//               </span>
+//               <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Hire me</a>
+//               <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Freelance</a>
+//             </div>
+//           </div>
+
+//           {/* Bottom bar */}
+//           <div className="mega-footer__bottom">
+//             <span>© 2026 Srijon Karmakar</span>
+//             <span className="mega-footer__role">Kolkata, India</span>
+//             <div className="mega-footer__socials">
+//               <a href="https://www.linkedin.com/in/srijon-karmakar/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+//                 <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+//               </a>
+//               <a href="https://github.com/srijon57" target="_blank" rel="noreferrer" aria-label="GitHub">
+//                 <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+//               </a>
+//               <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer" aria-label="Email">
+//                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+//               </a>
+//             </div>
+//           </div>
+
+//         </div>
 //       </footer>
 //     </div>
 //   );
@@ -688,7 +1007,100 @@
 
 
 
-// 2nd attempt: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 3rd attempt
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -810,13 +1222,13 @@ const projects = [
 ];
 
 const PROJECT_ACCENTS = [
-  "linear-gradient(135deg, #6d28d9, #8b5cf6)",
-  "linear-gradient(135deg, #4f46e5, #7c3aed)",
-  "linear-gradient(135deg, #7c3aed, #c084fc)",
-  "linear-gradient(135deg, #5b21b6, #8b5cf6)",
+  "linear-gradient(135deg, #7c3aed, #22d3ee)",
   "linear-gradient(135deg, #6d28d9, #a855f7)",
-  "linear-gradient(135deg, #4338ca, #7c3aed)",
-  "linear-gradient(135deg, #7c3aed, #a78bfa)",
+  "linear-gradient(135deg, #4f46e5, #8b5cf6)",
+  "linear-gradient(135deg, #0ea5e9, #7c3aed)",
+  "linear-gradient(135deg, #9333ea, #ec4899)",
+  "linear-gradient(135deg, #2563eb, #8b5cf6)",
+  "linear-gradient(135deg, #7c3aed, #14b8a6)",
 ];
 
 const services = [
@@ -825,28 +1237,32 @@ const services = [
     description:
       "End-to-end web applications built with React.js, Node.js, and Django. From system architecture to deployment, I own the full lifecycle.",
     tags: ["React.js", "Node.js", "Django", "REST APIs", "PostgreSQL"],
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80&fit=crop",
   },
   {
     title: "Backend Systems",
     description:
       "Scalable server-side architecture, REST API design, database modelling, and role-based authentication built for real production loads.",
     tags: ["Node.js", "Express", "PostgreSQL", "MongoDB", "JWT"],
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&q=80&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80&fit=crop",
   },
   {
     title: "UI & Interfaces",
     description:
       "Clean, responsive dashboards and workflow interfaces with a strong focus on performance, usability, and modern interaction design.",
     tags: ["React.js", "Tailwind", "GSAP", "Framer Motion"],
-    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=900&q=80&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80&fit=crop",
   },
   {
     title: "Data & Automation",
     description:
       "Data-driven applications, visualisation dashboards, and Python-based automation workflows grounded in a Data Science foundation.",
     tags: ["Python", "Data Science", "Django", "Automation"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&fit=crop",
   },
 ];
 
@@ -936,13 +1352,30 @@ function Glyph({ type }) {
   );
 }
 
+function TitleReveal({ text }) {
+  return (
+    <span className="title-reveal">
+      {text.split(" ").map((word, index) => (
+        <span className="title-word-wrap" key={`${word}-${index}`}>
+          <span className="title-word js-title-word">{word}</span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function SectionTitle({ text }) {
+  return (
+    <h2 className="section-title">
+      <TitleReveal text={text} />
+    </h2>
+  );
+}
+
 export default function LandingSections() {
   const rootRef = useRef(null);
   const [theme, setTheme] = useState(() => {
-    if (typeof window === "undefined") {
-      return "light";
-    }
-
+    if (typeof window === "undefined") return "light";
     return window.localStorage.getItem("landing-theme") || "light";
   });
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -973,7 +1406,10 @@ export default function LandingSections() {
       setStatus({ type: "success", text: "Message sent successfully." });
       setForm({ name: "", email: "", message: "" });
     } catch (error) {
-      setStatus({ type: "error", text: error?.message || "Failed to send message." });
+      setStatus({
+        type: "error",
+        text: error?.message || "Failed to send message.",
+      });
     } finally {
       setLoading(false);
     }
@@ -989,21 +1425,27 @@ export default function LandingSections() {
     const root = rootRef.current;
     if (!root) return undefined;
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-    // Instant reveal for accessibility — no animation at all
     if (prefersReducedMotion) {
-      root.querySelectorAll(".js-reveal").forEach((el) => {
-        gsap.set(el, { opacity: 1, y: 0, x: 0, scale: 1, clearProps: "transform" });
+      root.querySelectorAll(".js-reveal, .js-title-word").forEach((el) => {
+        gsap.set(el, {
+          opacity: 1,
+          y: 0,
+          x: 0,
+          scale: 1,
+          rotate: 0,
+          clearProps: "transform",
+        });
       });
       return undefined;
     }
 
-    // gsap.context() scopes all animations + ScrollTriggers to root.
-    // ctx.revert() kills everything on unmount — no manual tracking needed.
     let motionObserver;
-    const ctx = gsap.context(() => {
 
+    const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add(
@@ -1011,51 +1453,92 @@ export default function LandingSections() {
         (context) => {
           const { mobile } = context.conditions;
 
-          const Y    = mobile ? 24 : 44;
-          const dur  = mobile ? 0.9 : 1.1;
-          const stgr = mobile ? 0.1 : 0.13;
-          const ease = "power3.out";
-          // On mobile trigger a bit earlier (element barely in view is enough)
-          const start = mobile ? "top 92%" : "top 85%";
+          const yDistance = mobile ? 28 : 54;
+          const duration = mobile ? 0.9 : 1.1;
+          const stagger = mobile ? 0.08 : 0.11;
+          const start = mobile ? "top 92%" : "top 84%";
 
-          // ── Core reveal: each .js-reveal-group triggers its children ──
-          // CSS hides .js-reveal elements; GSAP animates them in when their
-          // parent group enters the viewport, with a stagger between items.
           gsap.utils.toArray(".js-reveal-group", root).forEach((group) => {
-            const items = gsap
+            const baseItems = gsap
               .utils
               .toArray(".js-reveal", group)
-              .filter((item) => !item.classList.contains("proj-card") && !item.classList.contains("timeline-item"));
-            if (!items.length) return;
+              .filter(
+                (item) =>
+                  !item.classList.contains("proj-card") &&
+                  !item.classList.contains("timeline-item") &&
+                  !item.classList.contains("service-card")
+              );
 
-            gsap.fromTo(
-              items,
-              { opacity: 0, y: Y },
-              {
-                opacity: 1,
-                y: 0,
-                duration: dur,
-                stagger: stgr,
-                ease,
-                scrollTrigger: { trigger: group, start, once: true },
-              }
-            );
+            if (baseItems.length) {
+              gsap.fromTo(
+                baseItems,
+                {
+                  opacity: 0,
+                  y: yDistance,
+                  scale: 0.98,
+                },
+                {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  duration,
+                  stagger,
+                  ease: "power3.out",
+                  scrollTrigger: {
+                    trigger: group,
+                    start,
+                    once: true,
+                  },
+                }
+              );
+            }
+
+            const words = gsap.utils.toArray(".js-title-word", group);
+            if (words.length) {
+              gsap.fromTo(
+                words,
+                {
+                  yPercent: 120,
+                  opacity: 0,
+                  rotate: 2,
+                },
+                {
+                  yPercent: 0,
+                  opacity: 1,
+                  rotate: 0,
+                  duration: mobile ? 0.7 : 0.85,
+                  stagger: mobile ? 0.035 : 0.045,
+                  ease: "power4.out",
+                  scrollTrigger: {
+                    trigger: group,
+                    start,
+                    once: true,
+                  },
+                }
+              );
+            }
           });
 
-          // ── Project cards: also animate scale ─────────────────
           const projectCards = gsap.utils.toArray(".proj-card", root);
           const projectGrid = root.querySelector(".proj-grid");
+
           if (projectCards.length && projectGrid) {
             gsap.fromTo(
               projectCards,
-              { opacity: 0, y: Y, scale: 0.96 },
+              {
+                opacity: 0,
+                y: yDistance,
+                scale: 0.94,
+                rotateX: 5,
+              },
               {
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                duration: dur,
-                stagger: stgr,
-                ease,
+                rotateX: 0,
+                duration,
+                stagger: 0.12,
+                ease: "power3.out",
                 overwrite: "auto",
                 scrollTrigger: {
                   trigger: projectGrid,
@@ -1066,24 +1549,24 @@ export default function LandingSections() {
             );
           }
 
-          // ── Timeline items: slide from alternating sides on desktop ──
           const timelineItems = gsap.utils.toArray(".timeline-item", root);
           const experienceSection = root.querySelector("#experience");
+
           if (timelineItems.length && experienceSection) {
             gsap.fromTo(
               timelineItems,
               {
                 opacity: 0,
-                y: mobile ? Y : 0,
-                x: (_, itemIndex) => (mobile ? 0 : itemIndex % 2 === 0 ? -30 : 30),
+                y: mobile ? yDistance : 0,
+                x: (_, i) => (mobile ? 0 : i % 2 === 0 ? -42 : 42),
               },
               {
                 opacity: 1,
                 y: 0,
                 x: 0,
-                duration: dur,
-                stagger: stgr,
-                ease,
+                duration,
+                stagger: 0.14,
+                ease: "power3.out",
                 overwrite: "auto",
                 scrollTrigger: {
                   trigger: experienceSection,
@@ -1093,58 +1576,103 @@ export default function LandingSections() {
               }
             );
           }
+
+          const serviceCards = gsap.utils.toArray(".service-card", root);
+          gsap.set(serviceCards, {
+            opacity: 0,
+            y: 56,
+            scale: 0.975,
+            transformOrigin: "center top",
+          });
+
+          ScrollTrigger.batch(serviceCards, {
+            start: mobile ? "top 94%" : "top 88%",
+            once: true,
+            onEnter: (batch) =>
+              gsap.to(batch, {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: mobile ? 0.85 : 1,
+                ease: "power3.out",
+                stagger: { each: 0.12, from: "start" },
+              }),
+          });
+
+          const serviceWraps = gsap.utils.toArray(".service-wrap", root);
+          serviceWraps.slice(0, -1).forEach((wrap, i) => {
+            const card = wrap.querySelector(".service-card");
+            const nextWrap = serviceWraps[i + 1];
+            if (!card || !nextWrap) return;
+
+            gsap.to(card, {
+              scale: 0.968,
+              y: -8,
+              filter: "brightness(0.93)",
+              ease: "none",
+              transformOrigin: "center top",
+              scrollTrigger: {
+                trigger: nextWrap,
+                start: "top 88%",
+                end: "top 28%",
+                scrub: 0.7,
+              },
+            });
+          });
         }
       );
 
-      // ── Glyph floats — continuous idle animation ─────────────
-      gsap.utils.toArray(".js-glyph-float", root).forEach((glyph, i) =>
+      gsap.utils.toArray(".js-glyph-float", root).forEach((glyph, i) => {
         gsap.to(glyph, {
-          y:        i % 2 === 0 ? -10 : 10,
-          rotation: i % 2 === 0 ? -5  : 5,
-          duration: 4.8 + i * 0.5,
-          repeat:   -1,
-          yoyo:     true,
-          ease:     "sine.inOut",
-        })
-      );
-
-      // ── Service cards: sticky stacking + scroll-scrub scale ──
-      const serviceWraps = gsap.utils.toArray(".service-wrap", root);
-
-      serviceWraps.slice(0, -1).forEach((wrap, i) => {
-        const card     = wrap.querySelector(".service-card");
-        const nextWrap = serviceWraps[i + 1];
-        if (!card || !nextWrap) return;
-
-        gsap.to(card, {
-          scale: 0.97,
-          filter: "brightness(0.92)",
-          ease: "none",
-          transformOrigin: "center top",
-          scrollTrigger: {
-            trigger: nextWrap,
-            start: "top 88%",
-            end: "top 30%",
-            scrub: 0.6,
-          },
+          y: i % 2 === 0 ? -12 : 12,
+          rotation: i % 2 === 0 ? -6 : 6,
+          duration: 5 + i * 0.35,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
         });
       });
 
-      const serviceCards = gsap.utils.toArray(".service-card", root);
-      gsap.set(serviceCards, { opacity: 0, y: 52, scale: 0.98, transformOrigin: "center top" });
+      const orbA = root.querySelector(".landing-orb-a");
+      const orbB = root.querySelector(".landing-orb-b");
 
-      ScrollTrigger.batch(serviceCards, {
-        start: "top 90%",
-        once:  true,
-        onEnter: (batch) =>
-          gsap.to(batch, {
-            opacity: 1,
-            y:       0,
-            scale:   1,
-            duration: 0.95,
-            ease:    "power3.out",
-            stagger: { each: 0.1, from: "start" },
-          }),
+      if (orbA) {
+        gsap.to(orbA, {
+          y: -40,
+          x: 30,
+          duration: 9,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+
+      if (orbB) {
+        gsap.to(orbB, {
+          y: 36,
+          x: -26,
+          duration: 10.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+
+      gsap.utils.toArray(".js-parallax-soft", root).forEach((item, index) => {
+        gsap.fromTo(
+          item,
+          { y: 0 },
+          {
+            y: index % 2 === 0 ? -26 : -18,
+            ease: "none",
+            scrollTrigger: {
+              trigger: item,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          }
+        );
       });
 
       motionObserver = new IntersectionObserver(
@@ -1164,6 +1692,7 @@ export default function LandingSections() {
         motionObserver.observe(node);
       });
 
+      ScrollTrigger.refresh();
     }, root);
 
     return () => {
@@ -1174,39 +1703,47 @@ export default function LandingSections() {
 
   return (
     <div className={`landing-shell landing-shell-${theme}`} ref={rootRef}>
+      <div className="landing-noise" aria-hidden="true" />
       <div className="landing-orb landing-orb-a" aria-hidden="true" />
       <div className="landing-orb landing-orb-b" aria-hidden="true" />
+      <div className="landing-grid-glow" aria-hidden="true" />
 
       <div className="landing-toolbar">
         <button
           type="button"
           className="theme-toggle"
-          onClick={() => setTheme((current) => (current === "light" ? "dark" : "light"))}
+          onClick={() =>
+            setTheme((current) => (current === "light" ? "dark" : "light"))
+          }
           aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
         >
           <span className="theme-toggle-track">
             <span className="theme-toggle-thumb" />
           </span>
           <span className="theme-toggle-label">
-            {theme === "light" ? "Black mode" : "White mode"}
+            {theme === "light" ? "Dark mode" : "Light mode"}
           </span>
         </button>
       </div>
 
-      <section className="portfolio-section portfolio-section-intro js-reveal-group" id="about">
+      <section
+        className="portfolio-section portfolio-section-intro js-reveal-group"
+        id="about"
+      >
         <div className="section-heading js-reveal">
           <span className="section-kicker">About</span>
-          <h2 className="section-title">I build scalable digital products.</h2>
+          <SectionTitle text="I build scalable digital products." />
           <p className="section-copy">
-            Full Stack Developer with hands-on experience building scalable web applications
-            using React.js, Node.js, and modern backend systems. Focused on delivering
-            production-ready solutions with clean architecture, optimized performance,
-            and strong user experience across devices.
+            Full Stack Developer with hands-on experience building scalable web
+            applications using React.js, Node.js, and modern backend systems.
+            Focused on delivering production-ready solutions with clean
+            architecture, optimized performance, and strong user experience
+            across devices.
           </p>
         </div>
 
         <div className="about-layout">
-          <article className="about-summary-card js-reveal">
+          <article className="about-summary-card js-reveal js-parallax-soft">
             <div className="about-photo-deck">
               <div className="about-photo-stack">
                 <img
@@ -1216,6 +1753,8 @@ export default function LandingSections() {
                   loading="lazy"
                   decoding="async"
                 />
+                <div className="about-badge about-badge-top">Developer</div>
+                <div className="about-badge about-badge-bottom">UI + Backend</div>
               </div>
             </div>
 
@@ -1224,8 +1763,9 @@ export default function LandingSections() {
                 B.Tech in Computer Science & Engineering, Data Science
               </p>
               <p className="about-text">
-                Based in Kolkata. Computer Science graduate with a focus on Data Science.
-                I work across frontend and backend to create clean, efficient, and scalable systems.
+                Based in Kolkata. Computer Science graduate with a focus on Data
+                Science. I work across frontend and backend to create clean,
+                efficient, and scalable systems.
               </p>
             </div>
           </article>
@@ -1233,95 +1773,115 @@ export default function LandingSections() {
           <div className="fact-grid">
             <article className="info-card js-reveal">
               <p className="info-value">2025</p>
-              <p className="info-text">Graduated in July 2025 from Brainware University.</p>
+              <p className="info-text">
+                Graduated in July 2025 from Brainware University.
+              </p>
             </article>
             <article className="info-card js-reveal">
               <p className="info-value">8.6 GPA</p>
-              <p className="info-text">Strong academic foundation in Computer Science and Data Science.</p>
+              <p className="info-text">
+                Strong academic foundation in Computer Science and Data Science.
+              </p>
             </article>
             <article className="info-card js-reveal">
               <p className="info-value">Full Stack</p>
-              <p className="info-text">Builds complete systems from interface to backend logic and database design.</p>
+              <p className="info-text">
+                Builds complete systems from interface to backend logic and
+                database design.
+              </p>
             </article>
           </div>
         </div>
       </section>
 
-     
+      <section className="portfolio-section js-reveal-group" id="skills">
+        <div className="section-heading js-reveal">
+          <span className="section-kicker">Skills</span>
+          <SectionTitle text="Tools I work with." />
+          <p className="section-copy">
+            A focused stack for building modern web applications.
+          </p>
+        </div>
 
+        <div className="skills-rail-wrap js-reveal">
+          <div
+            className="skills-rail-fade skills-rail-fade-left"
+            aria-hidden="true"
+          />
+          <div
+            className="skills-rail-fade skills-rail-fade-right"
+            aria-hidden="true"
+          />
 
+          <div className="skills-rail skills-rail-one">
+            <div className="skills-rail-track js-pausable-motion">
+              {[...skillRailOne, ...skillRailOne].map((item, index) => (
+                <span
+                  className="skills-rail-chip"
+                  key={`rail-one-${item.label}-${index}`}
+                >
+                  <span className="skills-rail-chip-icon" aria-hidden="true">
+                    <Glyph type={item.icon} />
+                  </span>
+                  <span>{item.label}</span>
+                </span>
+              ))}
+            </div>
+          </div>
 
-<section className="portfolio-section js-reveal-group" id="skills">
-  <div className="section-heading js-reveal">
-    <span className="section-kicker">Skills</span>
-    <h2 className="section-title">Tools I work with.</h2>
-    <p className="section-copy">
-      A focused stack for building modern web applications.
-    </p>
-  </div>
+          <div className="skills-rail skills-rail-two">
+            <div className="skills-rail-track js-pausable-motion">
+              {[...skillRailTwo, ...skillRailTwo].map((item, index) => (
+                <span
+                  className="skills-rail-chip"
+                  key={`rail-two-${item.label}-${index}`}
+                >
+                  <span className="skills-rail-chip-icon" aria-hidden="true">
+                    <Glyph type={item.icon} />
+                  </span>
+                  <span>{item.label}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <div className="skills-rail-wrap js-reveal">
-    <div className="skills-rail-fade skills-rail-fade-left" aria-hidden="true" />
-    <div className="skills-rail-fade skills-rail-fade-right" aria-hidden="true" />
-
-    <div className="skills-rail skills-rail-one">
-      <div className="skills-rail-track js-pausable-motion">
-        {[...skillRailOne, ...skillRailOne].map((item, index) => (
-          <span className="skills-rail-chip" key={`rail-one-${item.label}-${index}`}>
-            <span className="skills-rail-chip-icon" aria-hidden="true">
-              <Glyph type={item.icon} />
-            </span>
-            <span>{item.label}</span>
-          </span>
-        ))}
-      </div>
-    </div>
-
-    <div className="skills-rail skills-rail-two">
-      <div className="skills-rail-track js-pausable-motion">
-        {[...skillRailTwo, ...skillRailTwo].map((item, index) => (
-          <span className="skills-rail-chip" key={`rail-two-${item.label}-${index}`}>
-            <span className="skills-rail-chip-icon" aria-hidden="true">
-              <Glyph type={item.icon} />
-            </span>
-            <span>{item.label}</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-      <section className="portfolio-section portfolio-section-featured proj-section js-reveal-group" id="projects">
+      <section
+        className="portfolio-section portfolio-section-featured proj-section js-reveal-group"
+        id="projects"
+      >
         <div className="section-heading proj-header js-reveal">
           <span className="section-kicker">Projects</span>
-          <h2 className="section-title">Selected projects.</h2>
+          <SectionTitle text="Selected projects." />
           <p className="section-copy">
-            Real-world applications built with performance, scalability, and usability in mind.
+            Real-world applications built with performance, scalability, and
+            usability in mind.
           </p>
         </div>
 
         <div className="proj-grid">
           {projects.map((project, index) => (
             <article
-              className={`proj-card js-reveal${index === 0 ? " proj-card--featured" : ""}`}
+              className={`proj-card js-reveal js-parallax-soft${
+                index === 0 ? " proj-card--featured" : ""
+              }`}
               key={project.title}
             >
-              {/* Gradient top accent */}
-              <div className="proj-card__accent" style={{ background: PROJECT_ACCENTS[index] }} />
+              <div
+                className="proj-card__accent"
+                style={{ background: PROJECT_ACCENTS[index] }}
+              />
 
-              {/* Watermark number */}
               <span className="proj-card__watermark" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
 
               <div className="proj-card__inner">
-                {/* Top row: index + ext link */}
                 <div className="proj-card__top">
-                  <span className="proj-card__num">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="proj-card__num">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                   {project.href && (
                     <a
                       className="proj-card__ext"
@@ -1331,21 +1891,26 @@ export default function LandingSections() {
                       aria-label={`Open ${project.title}`}
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
                         <path d="M7 17L17 7M17 7H7M17 7v10" />
                       </svg>
                     </a>
                   )}
                 </div>
 
-                {/* Body */}
                 <div className="proj-card__body">
                   <p className="proj-card__role">{project.role}</p>
                   <h3 className="proj-card__title">{project.title}</h3>
                   <p className="proj-card__desc">{project.description}</p>
                 </div>
 
-                {/* Footer: tags + CTA */}
                 <div className="proj-card__footer">
                   <div className="proj-card__tags">
                     {project.tags.map((tag) => (
@@ -1353,11 +1918,18 @@ export default function LandingSections() {
                     ))}
                   </div>
                   {project.href ? (
-                    <a className="proj-card__link" href={project.href} target="_blank" rel="noreferrer">
+                    <a
+                      className="proj-card__link"
+                      href={project.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       Open project <span className="proj-card__arrow">↗</span>
                     </a>
                   ) : (
-                    <span className="proj-card__link proj-card__link--muted">Link on request</span>
+                    <span className="proj-card__link proj-card__link--muted">
+                      Link on request
+                    </span>
                   )}
                 </div>
               </div>
@@ -1369,7 +1941,7 @@ export default function LandingSections() {
       <section className="portfolio-section js-reveal-group" id="experience">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Experience</span>
-          <h2 className="section-title">Experience.</h2>
+          <SectionTitle text="Experience." />
           <p className="section-copy">
             Building production systems and delivering real-world applications.
           </p>
@@ -1398,21 +1970,30 @@ export default function LandingSections() {
       </section>
 
       <section className="services-section" id="services">
-        <h2 className="sr-only">What I do</h2>
+        <div className="portfolio-section services-inner js-reveal-group">
+          <div className="section-heading js-reveal">
+            <span className="section-kicker">Services</span>
+            <SectionTitle text="What I do best." />
+            <p className="section-copy">
+              Design-forward engineering with strong interfaces, structured
+              backend systems, and scalable delivery.
+            </p>
+          </div>
+        </div>
 
-        {/* Marquee rail */}
         <div className="services-marquee" aria-hidden="true">
           <div className="services-marquee-track js-pausable-motion">
             {[...services, ...services].map((s, i) => (
               <span key={`${s.title}-${i}`} className="services-marquee-item">
                 {s.title}
-                <span className="services-marquee-sep" aria-hidden="true">·</span>
+                <span className="services-marquee-sep" aria-hidden="true">
+                  ·
+                </span>
               </span>
             ))}
           </div>
         </div>
 
-        {/* Sticky stacking cards */}
         <div className="services-stack">
           {services.map((service, index) => (
             <div
@@ -1428,7 +2009,9 @@ export default function LandingSections() {
                     <p className="service-card-desc">{service.description}</p>
                     <div className="service-card-tags">
                       {service.tags.map((tag) => (
-                        <span key={tag} className="service-card-tag">{tag}</span>
+                        <span key={tag} className="service-card-tag">
+                          {tag}
+                        </span>
                       ))}
                     </div>
                   </div>
@@ -1449,60 +2032,15 @@ export default function LandingSections() {
         </div>
       </section>
 
-
-      {/* <section className="portfolio-section js-reveal-group" id="approach">
-        <div className="section-heading js-reveal">
-          <span className="section-kicker">Approach</span>
-          <h2 className="section-title">How I work.</h2>
-          <p className="section-copy">
-            Practical development with a strong focus on clarity, delivery, and system quality.
-          </p>
-        </div>
-
-        <div className="testimonial-grid">
-          {proofCards.map((item) => (
-            <article className="panel-card testimonial-card js-reveal" key={item.title}>
-              <div className="glyph-card glyph-card-small js-glyph-float" aria-hidden="true">
-                <Glyph type="code" />
-              </div>
-              <div>
-                <strong>{item.title}</strong>
-                <p className="testimonial-quote">{item.text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section> */}
-
-
-      {/* <section className="portfolio-section js-reveal-group" id="blog">
-        <div className="section-heading js-reveal">
-          <span className="section-kicker">Beyond Code</span>
-          <h2 className="section-title">Beyond code.</h2>
-          <p className="section-copy">
-            Learning, design, and continuous exploration shape the way I build.
-          </p>
-        </div>
-
-        <div className="blog-grid">
-          {writingCards.map((post) => (
-            <article className="blog-card js-reveal" key={post.title}>
-              <span className="blog-pill">From CV</span>
-              <h3>{post.title}</h3>
-              <p>{post.text}</p>
-            </article>
-          ))}
-        </div>
-      </section> */}
-
       <section className="portfolio-section cta-panel js-reveal-group" id="cta">
         <div className="cta-layout">
           <div className="section-heading js-reveal">
             <span className="section-kicker">Contact</span>
-            <h2 className="section-title">Let’s build something great.</h2>
+            <SectionTitle text="Let’s build something great." />
             <p className="section-copy">
-              Open to full-time roles, freelance projects, and collaborations where I can
-              contribute to building scalable and impactful digital products.
+              Open to full-time roles, freelance projects, and collaborations
+              where I can contribute to building scalable and impactful digital
+              products.
             </p>
           </div>
 
@@ -1526,10 +2064,10 @@ export default function LandingSections() {
       <section className="portfolio-section js-reveal-group" id="contact">
         <div className="section-heading js-reveal">
           <span className="section-kicker">Get in touch</span>
-          <h2 className="section-title">Get in touch.</h2>
+          <SectionTitle text="Get in touch." />
           <p className="section-copy">
-            Feel free to reach out for opportunities, collaborations, or project discussions.
-            I’m available for full-time roles and freelance work.
+            Feel free to reach out for opportunities, collaborations, or project
+            discussions. I’m available for full-time roles and freelance work.
           </p>
         </div>
 
@@ -1574,20 +2112,24 @@ export default function LandingSections() {
           />
 
           {status.text ? (
-            <p className={`landing-contact-status landing-contact-status-${status.type}`}>
+            <p
+              className={`landing-contact-status landing-contact-status-${status.type}`}
+            >
               {status.text}
             </p>
           ) : null}
 
-          <button className="cta-button cta-button-primary landing-contact-submit" type="submit" disabled={loading}>
+          <button
+            className="cta-button cta-button-primary landing-contact-submit"
+            type="submit"
+            disabled={loading}
+          >
             {loading ? "Sending..." : "Send message"}
           </button>
         </form>
       </section>
 
       <footer className="mega-footer">
-
-        {/* ── Dark rounded card with marquee ── */}
         <div className="mega-footer__dark">
           <div className="mega-footer__ticker" aria-hidden="true">
             <div className="mega-footer__ticker-track js-pausable-motion">
@@ -1595,9 +2137,13 @@ export default function LandingSections() {
                 <span key={i} className="mega-footer__ticker-group">
                   <span className="mega-footer__ticker-item">Hire me ↗</span>
                   <span className="mega-footer__ticker-sep">·</span>
-                  <span className="mega-footer__ticker-item">Let's work together ↗</span>
+                  <span className="mega-footer__ticker-item">
+                    Let's work together ↗
+                  </span>
                   <span className="mega-footer__ticker-sep">·</span>
-                  <span className="mega-footer__ticker-item">Open to opportunities ↗</span>
+                  <span className="mega-footer__ticker-item">
+                    Open to opportunities ↗
+                  </span>
                   <span className="mega-footer__ticker-sep">·</span>
                   <span className="mega-footer__ticker-item">Get in touch ↗</span>
                   <span className="mega-footer__ticker-sep">·</span>
@@ -1607,10 +2153,7 @@ export default function LandingSections() {
           </div>
         </div>
 
-        {/* ── Light footer body ── */}
         <div className="mega-footer__light">
-
-          {/* 4-column grid */}
           <div className="mega-footer__cols">
             <div className="mega-footer__col">
               <p className="mega-footer__col-heading">Portfolio</p>
@@ -1628,9 +2171,27 @@ export default function LandingSections() {
             </div>
             <div className="mega-footer__col">
               <p className="mega-footer__col-heading">Connect</p>
-              <a href="https://www.linkedin.com/in/srijon-karmakar/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Email ↗</a>
-              <a href="https://github.com/srijon57" target="_blank" rel="noreferrer">GitHub ↗</a>
+              <a
+                href="https://www.linkedin.com/in/srijon-karmakar/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                LinkedIn ↗
+              </a>
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Email ↗
+              </a>
+              <a
+                href="https://github.com/srijon57"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub ↗
+              </a>
             </div>
             <div className="mega-footer__col">
               <p className="mega-footer__col-heading">Availability</p>
@@ -1638,28 +2199,69 @@ export default function LandingSections() {
                 <span className="mega-footer__dot" aria-hidden="true" />
                 Open to work
               </span>
-              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Hire me</a>
-              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer">Freelance</a>
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Hire me
+              </a>
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Freelance
+              </a>
             </div>
           </div>
 
-          {/* Bottom bar */}
           <div className="mega-footer__bottom">
             <span>© 2026 Srijon Karmakar</span>
             <span className="mega-footer__role">Kolkata, India</span>
             <div className="mega-footer__socials">
-              <a href="https://www.linkedin.com/in/srijon-karmakar/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              <a
+                href="https://www.linkedin.com/in/srijon-karmakar/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                  <rect x="2" y="9" width="4" height="12" />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
               </a>
-              <a href="https://github.com/srijon57" target="_blank" rel="noreferrer" aria-label="GitHub">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              <a
+                href="https://github.com/srijon57"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
+                </svg>
               </a>
-              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com" target="_blank" rel="noreferrer" aria-label="Email">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=srijonkarmakar.dev@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Email"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  width="16"
+                  height="16"
+                >
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
               </a>
             </div>
           </div>
-
         </div>
       </footer>
     </div>
