@@ -215,7 +215,6 @@ box-shadow:
 .hero-subtitle,
 .hero-body,
 .hero-btn {
-  opacity: 1 !important;
   color: rgba(255, 255, 255, 0.97);
 }
 
@@ -468,5 +467,43 @@ box-shadow:
     border-radius: 50%;
     font-size: 0.72rem;
     line-height: 1.15;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   HERO TEXT REVEAL — pure CSS, no JS overhead
+   fill-mode: both → "from" state applied before delay starts
+   so there is zero flash of unstyled content
+───────────────────────────────────────────────────────────── */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* All direct children of the text block animate in */
+.hero-text-block > * {
+  animation: hero-rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Stagger each child — name → role → subtitle → body → buttons */
+.hero-text-block > *:nth-child(1) { animation-delay: 0.15s; }
+.hero-text-block > *:nth-child(2) { animation-delay: 0.35s; }
+.hero-text-block > *:nth-child(3) { animation-delay: 0.52s; }
+.hero-text-block > *:nth-child(4) { animation-delay: 0.68s; }
+.hero-text-block > *:nth-child(5) { animation-delay: 0.84s; }
+
+/* Respect user motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .hero-text-block > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

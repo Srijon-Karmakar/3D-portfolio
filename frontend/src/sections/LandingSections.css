@@ -1835,9 +1835,6 @@
 
 /* ─── PROJECTS SECTION (redesign) ─────────────────────────────── */
 /* padding/width inherited from .portfolio-section */
-.proj-section {
-  /* no extra padding override */
-}
 
 .proj-header {
   margin-bottom: 2rem;
@@ -2079,8 +2076,25 @@
   }
 }
 
+/* ─────────────────────────────────────────────────────────────
+   SCROLL-TRIGGER REVEAL SYSTEM
+   GSAP handles all animation via inline styles.
+   This CSS only hides elements before JS runs (prevents FOUC).
+   prefers-reduced-motion handled in JS (gsap.set immediate reveal)
+   + CSS fallback below for no-JS environments.
+───────────────────────────────────────────────────────────── */
+
+/* Hide before JS animates — GSAP overrides with inline styles */
 .js-reveal {
-  will-change: transform, opacity;
+  opacity: 0;
+}
+
+/* CSS-only fallback: if JS never runs, show everything */
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ─── MEGA FOOTER ─────────────────────────────────────────────── */

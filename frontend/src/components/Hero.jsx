@@ -2,7 +2,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { gsap } from "gsap";
 import TextPressure from "./TextPressure";
 import "./Hero.css";
 
@@ -18,20 +17,6 @@ export default function Home() {
       block: "start",
     });
   };
-
-  useEffect(() => {
-    gsap.fromTo(
-      ".hero-text-block > *",
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        stagger: 0.12,
-        duration: 0.8,
-        ease: "power3.out",
-      }
-    );
-  }, []);
 
   useEffect(() => {
     let idleId;

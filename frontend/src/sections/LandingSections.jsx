@@ -1030,101 +1030,154 @@ export default function LandingSections() {
     if (!root) return undefined;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return undefined;
 
-    const revealGroups = root.querySelectorAll(".js-reveal-group");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+    // Instant reveal for accessibility — no animation at all
+    if (prefersReducedMotion) {
+      root.querySelectorAll(".js-reveal").forEach((el) => {
+        gsap.set(el, { opacity: 1, y: 0, x: 0, scale: 1, clearProps: "transform" });
+      });
+      return undefined;
+    }
 
-          const targets = entry.target.querySelectorAll(".js-reveal");
-          gsap.fromTo(
-            targets,
-            { y: 26, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.72,
-              stagger: 0.08,
-              ease: "power2.out",
-              overwrite: "auto",
-            }
-          );
+    // gsap.context() scopes all animations + ScrollTriggers to root.
+    // ctx.revert() kills everything on unmount — no manual tracking needed.
+    const ctx = gsap.context(() => {
 
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
-    );
+      const mm = gsap.matchMedia();
 
-    revealGroups.forEach((group) => observer.observe(group));
+      mm.add(
+        { mobile: "(max-width: 767px)", desktop: "(min-width: 768px)" },
+        (context) => {
+          const { mobile } = context.conditions;
 
-    const glyphs = root.querySelectorAll(".js-glyph-float");
-    const glyphAnimations = Array.from(glyphs).map((glyph, index) =>
-      gsap.to(glyph, {
-        y: index % 2 === 0 ? -10 : 10,
-        rotation: index % 2 === 0 ? -5 : 5,
-        duration: 4.8 + index * 0.5,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      })
-    );
+          const Y    = mobile ? 24 : 44;
+          const dur  = mobile ? 0.9 : 1.1;
+          const stgr = mobile ? 0.1 : 0.13;
+          const ease = "power3.out";
+          // On mobile trigger a bit earlier (element barely in view is enough)
+          const start = mobile ? "top 92%" : "top 85%";
 
-    // Scale-down effect: each card shrinks slightly as the next slides over it
-    const serviceWraps = Array.from(root.querySelectorAll(".service-wrap"));
-    const stackTriggers = serviceWraps.slice(0, -1).map((wrap, i) => {
-      const card = wrap.querySelector(".service-card");
-      const nextWrap = serviceWraps[i + 1];
-      if (!card || !nextWrap) return null;
+          // ── Core reveal: each .js-reveal-group triggers its children ──
+          // CSS hides .js-reveal elements; GSAP animates them in when their
+          // parent group enters the viewport, with a stagger between items.
+          gsap.utils.toArray(".js-reveal-group", root).forEach((group) => {
+            const items = gsap.utils.toArray(".js-reveal", group);
+            if (!items.length) return;
 
-      return ScrollTrigger.create({
-        trigger: nextWrap,
-        start: "top 88%",
-        end: "top 30%",
-        scrub: 0.6,
-        onUpdate(self) {
-          const p = self.progress;
-          gsap.set(card, {
-            scale: 1 - p * 0.03,
-            transformOrigin: "center top",
-            filter: `brightness(${1 - p * 0.08})`,
+            gsap.fromTo(
+              items,
+              { opacity: 0, y: Y },
+              {
+                opacity: 1,
+                y: 0,
+                duration: dur,
+                stagger: stgr,
+                ease,
+                scrollTrigger: { trigger: group, start, once: true },
+              }
+            );
           });
-        },
-      });
-    }).filter(Boolean);
-    const cards = Array.from(root.querySelectorAll(".service-card"));
-    cards.forEach((card) => {
-      gsap.set(card, {
-        opacity: 0,
-        y: 52,
-        scale: 0.98,
-        transformOrigin: "center top",
-      });
-    });
 
-    const cardsReveal = ScrollTrigger.batch(cards, {
-      start: "top 90%",
-      once: true,
-      onEnter: (batch) => {
-        gsap.to(batch, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.7,
-          ease: "power2.out",
-          stagger: { each: 0.08, from: "start" },
+          // ── Project cards: also animate scale ─────────────────
+          gsap.utils.toArray(".proj-card", root).forEach((card, i) => {
+            gsap.fromTo(
+              card,
+              { scale: 0.96 },
+              {
+                scale: 1,
+                duration: dur,
+                delay: i * stgr,
+                ease,
+                overwrite: "auto",
+                scrollTrigger: {
+                  trigger: root.querySelector(".proj-grid"),
+                  start,
+                  once: true,
+                },
+              }
+            );
+          });
+
+          // ── Timeline items: slide from alternating sides on desktop ──
+          if (!mobile) {
+            gsap.utils.toArray(".timeline-item", root).forEach((item, i) => {
+              gsap.fromTo(
+                item,
+                { x: i % 2 === 0 ? -30 : 30 },
+                {
+                  x: 0,
+                  duration: dur,
+                  ease,
+                  overwrite: "auto",
+                  scrollTrigger: {
+                    trigger: root.querySelector("#experience"),
+                    start,
+                    once: true,
+                  },
+                  delay: i * stgr,
+                }
+              );
+            });
+          }
+        }
+      );
+
+      // ── Glyph floats — continuous idle animation ─────────────
+      gsap.utils.toArray(".js-glyph-float", root).forEach((glyph, i) =>
+        gsap.to(glyph, {
+          y:        i % 2 === 0 ? -10 : 10,
+          rotation: i % 2 === 0 ? -5  : 5,
+          duration: 4.8 + i * 0.5,
+          repeat:   -1,
+          yoyo:     true,
+          ease:     "sine.inOut",
+        })
+      );
+
+      // ── Service cards: sticky stacking + scroll-scrub scale ──
+      const serviceWraps = gsap.utils.toArray(".service-wrap", root);
+
+      serviceWraps.slice(0, -1).forEach((wrap, i) => {
+        const card     = wrap.querySelector(".service-card");
+        const nextWrap = serviceWraps[i + 1];
+        if (!card || !nextWrap) return;
+
+        ScrollTrigger.create({
+          trigger: nextWrap,
+          start:   "top 88%",
+          end:     "top 30%",
+          scrub:   0.6,
+          onUpdate(self) {
+            const p = self.progress;
+            gsap.set(card, {
+              scale:           1 - p * 0.03,
+              transformOrigin: "center top",
+              filter:          `brightness(${1 - p * 0.08})`,
+            });
+          },
         });
-      },
-    });
+      });
 
-    return () => {
-      observer.disconnect();
-      glyphAnimations.forEach((animation) => animation.kill());
-      stackTriggers.forEach((t) => t.kill());
-      cardsReveal?.forEach((trigger) => trigger.kill());
-    };
+      const serviceCards = gsap.utils.toArray(".service-card", root);
+      gsap.set(serviceCards, { opacity: 0, y: 52, scale: 0.98, transformOrigin: "center top" });
+
+      ScrollTrigger.batch(serviceCards, {
+        start: "top 90%",
+        once:  true,
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y:       0,
+            scale:   1,
+            duration: 0.95,
+            ease:    "power3.out",
+            stagger: { each: 0.1, from: "start" },
+          }),
+      });
+
+    }, root);
+
+    return () => ctx.revert();
   }, []);
 
   return (
