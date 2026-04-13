@@ -20,24 +20,29 @@ export default function Home() {
 
   useEffect(() => {
     let idleId;
-    let timeoutId;
+    const isLowEndDevice =
+      window.matchMedia("(max-width: 767px)").matches ||
+      navigator.connection?.saveData ||
+      (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+      (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 
-    if ("requestIdleCallback" in window) {
-      idleId = window.requestIdleCallback(
-        () => setShowSpline(true),
-        { timeout: 1200 }
-      );
-    } else {
-      timeoutId = window.setTimeout(() => setShowSpline(true), 200);
-    }
+    const timeoutId = window.setTimeout(() => {
+      if ("requestIdleCallback" in window) {
+        idleId = window.requestIdleCallback(
+          () => setShowSpline(true),
+          { timeout: isLowEndDevice ? 2400 : 1200 }
+        );
+        return;
+      }
+
+      setShowSpline(true);
+    }, isLowEndDevice ? 1100 : 180);
 
     return () => {
       if (idleId) {
         window.cancelIdleCallback(idleId);
       }
-      if (timeoutId) {
-        window.clearTimeout(timeoutId);
-      }
+      window.clearTimeout(timeoutId);
     };
   }, []);
 
@@ -135,4 +140,3 @@ export default function Home() {
     </main>
   );
 }
-

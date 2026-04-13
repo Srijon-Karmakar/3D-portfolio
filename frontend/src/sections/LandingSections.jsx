@@ -721,20 +721,6 @@ const experience = [
   },
 ];
 
-const aboutPhotos = [
-  "/me.jpg",
-  "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80&fit=crop",
-  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80&fit=crop",
-  "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80&fit=crop",
-];
-
-const STACK_TRANSFORMS = [
-  "translateY(0px) rotate(0deg) scale(1)",
-  "translateY(-10px) rotate(-3.5deg) scale(0.96)",
-  "translateY(-18px) rotate(4deg) scale(0.92)",
-  "translateY(-24px) rotate(-2deg) scale(0.88)",
-];
-
 const skillRailOne = [
   { label: "React.js", icon: "window" },
   { label: "Node.js", icon: "stack" },
@@ -864,28 +850,6 @@ const services = [
   },
 ];
 
-const proofCards = [
-  {
-    title: "End-to-end ownership",
-    text: "Handled complete feature lifecycles from planning and system design to deployment and optimization.",
-  },
-  {
-    title: "Cross-functional collaboration",
-    text: "Worked with designers, product teams, customer success, and business stakeholders to deliver reliable software.",
-  },
-];
-
-const writingCards = [
-  {
-    title: "Learning",
-    text: "Actively explores workshops, exhibitions, and practical learning experiences to stay connected with technology and industry trends.",
-  },
-  {
-    title: "Design",
-    text: "Interested in graphic design and open-source contributions, blending technical development with visual thinking.",
-  },
-];
-
 const contactLinks = [
   {
     label: "LinkedIn",
@@ -984,10 +948,6 @@ export default function LandingSections() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ type: "", text: "" });
-  const [activePhoto, setActivePhoto] = useState(0);
-
-  const nextPhoto = () => setActivePhoto((current) => (current + 1) % aboutPhotos.length);
-  const prevPhoto = () => setActivePhoto((current) => (current === 0 ? aboutPhotos.length - 1 : current - 1));
 
   const setField = (key, value) => {
     setForm((current) => ({ ...current, [key]: value }));
@@ -1041,6 +1001,7 @@ export default function LandingSections() {
 
     // gsap.context() scopes all animations + ScrollTriggers to root.
     // ctx.revert() kills everything on unmount — no manual tracking needed.
+    let motionObserver;
     const ctx = gsap.context(() => {
 
       const mm = gsap.matchMedia();
@@ -1061,7 +1022,10 @@ export default function LandingSections() {
           // CSS hides .js-reveal elements; GSAP animates them in when their
           // parent group enters the viewport, with a stagger between items.
           gsap.utils.toArray(".js-reveal-group", root).forEach((group) => {
-            const items = gsap.utils.toArray(".js-reveal", group);
+            const items = gsap
+              .utils
+              .toArray(".js-reveal", group)
+              .filter((item) => !item.classList.contains("proj-card") && !item.classList.contains("timeline-item"));
             if (!items.length) return;
 
             gsap.fromTo(
@@ -1079,45 +1043,55 @@ export default function LandingSections() {
           });
 
           // ── Project cards: also animate scale ─────────────────
-          gsap.utils.toArray(".proj-card", root).forEach((card, i) => {
+          const projectCards = gsap.utils.toArray(".proj-card", root);
+          const projectGrid = root.querySelector(".proj-grid");
+          if (projectCards.length && projectGrid) {
             gsap.fromTo(
-              card,
-              { scale: 0.96 },
+              projectCards,
+              { opacity: 0, y: Y, scale: 0.96 },
               {
+                opacity: 1,
+                y: 0,
                 scale: 1,
                 duration: dur,
-                delay: i * stgr,
+                stagger: stgr,
                 ease,
                 overwrite: "auto",
                 scrollTrigger: {
-                  trigger: root.querySelector(".proj-grid"),
+                  trigger: projectGrid,
                   start,
                   once: true,
                 },
               }
             );
-          });
+          }
 
           // ── Timeline items: slide from alternating sides on desktop ──
-          if (!mobile) {
-            gsap.utils.toArray(".timeline-item", root).forEach((item, i) => {
-              gsap.fromTo(
-                item,
-                { x: i % 2 === 0 ? -30 : 30 },
-                {
-                  x: 0,
-                  duration: dur,
-                  ease,
-                  overwrite: "auto",
-                  scrollTrigger: {
-                    trigger: root.querySelector("#experience"),
-                    start,
-                    once: true,
-                  },
-                  delay: i * stgr,
-                }
-              );
-            });
+          const timelineItems = gsap.utils.toArray(".timeline-item", root);
+          const experienceSection = root.querySelector("#experience");
+          if (timelineItems.length && experienceSection) {
+            gsap.fromTo(
+              timelineItems,
+              {
+                opacity: 0,
+                y: mobile ? Y : 0,
+                x: (_, itemIndex) => (mobile ? 0 : itemIndex % 2 === 0 ? -30 : 30),
+              },
+              {
+                opacity: 1,
+                y: 0,
+                x: 0,
+                duration: dur,
+                stagger: stgr,
+                ease,
+                overwrite: "auto",
+                scrollTrigger: {
+                  trigger: experienceSection,
+                  start,
+                  once: true,
+                },
+              }
+            );
           }
         }
       );
@@ -1142,18 +1116,16 @@ export default function LandingSections() {
         const nextWrap = serviceWraps[i + 1];
         if (!card || !nextWrap) return;
 
-        ScrollTrigger.create({
-          trigger: nextWrap,
-          start:   "top 88%",
-          end:     "top 30%",
-          scrub:   0.6,
-          onUpdate(self) {
-            const p = self.progress;
-            gsap.set(card, {
-              scale:           1 - p * 0.03,
-              transformOrigin: "center top",
-              filter:          `brightness(${1 - p * 0.08})`,
-            });
+        gsap.to(card, {
+          scale: 0.97,
+          filter: "brightness(0.92)",
+          ease: "none",
+          transformOrigin: "center top",
+          scrollTrigger: {
+            trigger: nextWrap,
+            start: "top 88%",
+            end: "top 30%",
+            scrub: 0.6,
           },
         });
       });
@@ -1175,9 +1147,29 @@ export default function LandingSections() {
           }),
       });
 
+      motionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            entry.target.dataset.inview = entry.isIntersecting ? "true" : "false";
+          });
+        },
+        {
+          threshold: 0.01,
+          rootMargin: "120px 0px 120px 0px",
+        }
+      );
+
+      gsap.utils.toArray(".js-pausable-motion", root).forEach((node) => {
+        node.dataset.inview = "true";
+        motionObserver.observe(node);
+      });
+
     }, root);
 
-    return () => ctx.revert();
+    return () => {
+      motionObserver?.disconnect();
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -1217,42 +1209,13 @@ export default function LandingSections() {
           <article className="about-summary-card js-reveal">
             <div className="about-photo-deck">
               <div className="about-photo-stack">
-                {aboutPhotos.map((src, index) => {
-                  const offset = (index - activePhoto + aboutPhotos.length) % aboutPhotos.length;
-                  const tf = STACK_TRANSFORMS[offset] ?? STACK_TRANSFORMS[STACK_TRANSFORMS.length - 1];
-                  return (
-                    <img
-                      key={src}
-                      className="about-photo-stacked"
-                      src={src}
-                      alt="Srijon Karmakar"
-                      loading={offset === 0 ? "eager" : "lazy"}
-                      style={{
-                        zIndex: aboutPhotos.length - offset,
-                        transform: tf,
-                        opacity: offset === 0 ? 1 : Math.max(0.45, 1 - offset * 0.22),
-                      }}
-                    />
-                  );
-                })}
-              </div>
-
-              <div className="about-photo-controls">
-                <button type="button" className="photo-arrow-btn" onClick={prevPhoto} aria-label="Previous photo">
-                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M15 18l-6-6 6-6" />
-                  </svg>
-                </button>
-                <span className="photo-dot-row">
-                  {aboutPhotos.map((_, i) => (
-                    <span key={i} className={`photo-dot${i === activePhoto ? " photo-dot-active" : ""}`} />
-                  ))}
-                </span>
-                <button type="button" className="photo-arrow-btn" onClick={nextPhoto} aria-label="Next photo">
-                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M9 18l6-6-6-6" />
-                  </svg>
-                </button>
+                <img
+                  className="about-photo-stacked"
+                  src="/me.jpg"
+                  alt="Srijon Karmakar"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </div>
 
@@ -1302,7 +1265,7 @@ export default function LandingSections() {
     <div className="skills-rail-fade skills-rail-fade-right" aria-hidden="true" />
 
     <div className="skills-rail skills-rail-one">
-      <div className="skills-rail-track">
+      <div className="skills-rail-track js-pausable-motion">
         {[...skillRailOne, ...skillRailOne].map((item, index) => (
           <span className="skills-rail-chip" key={`rail-one-${item.label}-${index}`}>
             <span className="skills-rail-chip-icon" aria-hidden="true">
@@ -1315,7 +1278,7 @@ export default function LandingSections() {
     </div>
 
     <div className="skills-rail skills-rail-two">
-      <div className="skills-rail-track">
+      <div className="skills-rail-track js-pausable-motion">
         {[...skillRailTwo, ...skillRailTwo].map((item, index) => (
           <span className="skills-rail-chip" key={`rail-two-${item.label}-${index}`}>
             <span className="skills-rail-chip-icon" aria-hidden="true">
@@ -1439,7 +1402,7 @@ export default function LandingSections() {
 
         {/* Marquee rail */}
         <div className="services-marquee" aria-hidden="true">
-          <div className="services-marquee-track">
+          <div className="services-marquee-track js-pausable-motion">
             {[...services, ...services].map((s, i) => (
               <span key={`${s.title}-${i}`} className="services-marquee-item">
                 {s.title}
@@ -1475,6 +1438,8 @@ export default function LandingSections() {
                       src={service.image}
                       alt={service.title}
                       loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
                     />
                   </div>
                 </div>
@@ -1625,7 +1590,7 @@ export default function LandingSections() {
         {/* ── Dark rounded card with marquee ── */}
         <div className="mega-footer__dark">
           <div className="mega-footer__ticker" aria-hidden="true">
-            <div className="mega-footer__ticker-track">
+            <div className="mega-footer__ticker-track js-pausable-motion">
               {[...Array(2)].map((_, i) => (
                 <span key={i} className="mega-footer__ticker-group">
                   <span className="mega-footer__ticker-item">Hire me ↗</span>

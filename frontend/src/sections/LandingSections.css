@@ -275,53 +275,6 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.about-photo-controls {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  display: flex;
-  gap: 0.5rem;
-}
-
-.photo-arrow-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  border: none;
-  border-radius: 50%;
-  background: var(--landing-pill-bg);
-  color: var(--landing-fg);
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.photo-arrow-btn:hover {
-  transform: translateY(-2px);
-  background: var(--landing-card-bg);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.landing-shell-dark .photo-arrow-btn {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.landing-shell-dark .photo-arrow-btn:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
-}
-
-.photo-arrow-btn svg {
-  width: 1.2rem;
-  height: 1.2rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
 .about-photo-glyph {
   position: absolute;
   right: 1rem;
@@ -1019,6 +972,8 @@
   width: min(100%, 72rem);
   margin: 0 auto;
   padding: 1.5rem 0 4rem;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 960px;
 }
 
 .portfolio-section-intro {
@@ -1139,86 +1094,21 @@
 .about-photo-stack {
   position: relative;
   width: 200px;
-  height: 264px;
-  /* card height (240) + 24px peek space at top */
+  height: 240px;
   margin: 0 auto;
 }
 
 .about-photo-stacked {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  display: block;
   width: 100%;
   height: 240px;
   object-fit: cover;
   border-radius: 1.25rem;
-  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.5s ease;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
-  will-change: transform, opacity;
 }
 
 .landing-shell-dark .about-photo-stacked {
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
-}
-
-/* Arrow controls */
-.about-photo-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.photo-arrow-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  border: 1.5px solid var(--landing-border);
-  background: var(--landing-card-bg);
-  color: var(--landing-text);
-  cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease,
-    border-color 0.18s ease, transform 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-.photo-arrow-btn:hover {
-  background: var(--landing-text);
-  color: var(--landing-bg);
-  border-color: var(--landing-text);
-}
-
-.photo-arrow-btn:active {
-  transform: scale(0.9);
-}
-
-.photo-arrow-btn svg {
-  width: 1rem;
-  height: 1rem;
-}
-
-/* Dot indicators */
-.photo-dot-row {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.photo-dot {
-  width: 0.35rem;
-  height: 0.35rem;
-  border-radius: 50%;
-  background: var(--landing-border);
-  transition: background 0.25s ease, transform 0.25s ease;
-}
-
-.photo-dot-active {
-  background: var(--landing-text);
-  transform: scale(1.4);
 }
 
 .about-summary-copy {
@@ -1392,6 +1282,8 @@
 /* ── Services Section ─────────────────────────── */
 .services-section {
   padding-bottom: 5rem;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1400px;
 }
 
 /* Marquee */
@@ -1408,6 +1300,10 @@
   width: max-content;
   animation: svc-marquee 16s linear infinite;
   will-change: transform;
+}
+
+.js-pausable-motion[data-inview="false"] {
+  animation-play-state: paused;
 }
 
 @keyframes svc-marquee {
@@ -2100,6 +1996,8 @@
 /* ─── MEGA FOOTER ─────────────────────────────────────────────── */
 .mega-footer {
   background: #f0ebff;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 640px;
 }
 
 /* ── Dark rounded card ── */
