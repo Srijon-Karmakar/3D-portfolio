@@ -840,6 +840,12 @@
   --landing-kicker-border: transparent;
   --landing-kicker-text: #6e6e73;
   --landing-title-gradient: none;
+  --landing-title-stop-1: #111111;
+  --landing-title-stop-2: #4f46e5;
+  --landing-title-stop-3: #7c3aed;
+  --landing-title-stop-4: #06b6d4;
+  --landing-title-stop-5: #111111;
+  --landing-title-stop-6: #111111;
   --landing-orb-a: transparent;
   --landing-orb-b: transparent;
   --landing-glyph-bg: #f5f5f7;
@@ -876,6 +882,12 @@
   --landing-kicker-border: transparent;
   --landing-kicker-text: #a1a1a6;
   --landing-title-gradient: none;
+  --landing-title-stop-1: #ffffff;
+  --landing-title-stop-2: #999999;
+  --landing-title-stop-3: #b181ff;
+  --landing-title-stop-4: #6d54c8;
+  --landing-title-stop-5: #865dd7;
+  --landing-title-stop-6: #8d83ff;
   --landing-orb-a: transparent;
   --landing-orb-b: transparent;
   --landing-glyph-bg: #111111;
@@ -1010,21 +1022,22 @@
 
 .section-title {
   margin: 0;
-  font-size: clamp(2.5rem, 8vw, 5.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.055em;
-  background: linear-gradient(120deg,
-      #111111 0%,
-      #4f46e5 22%,
-      #7c3aed 42%,
-      #06b6d4 62%,
-      #111111 82%,
-      #111111 100%);
-  background-size: 220% 220%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: landing-gradient-shift 8s ease-in-out infinite;
+  line-height: 1;
+  overflow: visible;
+}
+
+.section-title-svg {
+  display: block;
+  width: min(100%, 40rem);
+  height: auto;
+  overflow: visible;
+}
+
+.section-title-svg-text {
+  font-family: "Manrope", sans-serif;
+  font-size: 156px;
+  font-weight: 700;
+  letter-spacing: -0.045em;
 }
 
 .section-copy {
@@ -2279,23 +2292,12 @@
 }
 
 .landing-shell-dark .section-title {
-  background: linear-gradient(120deg,
-      #ffffff 0%,
-      #8b5cf6 22%,
-      #c084fc 42%,
-      #22d3ee 62%,
-      #ffffff 82%,
-      #ffffff 100%);
-  background-size: 220% 220%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--landing-fg);
 }
 
-
 @media (prefers-reduced-motion: reduce) {
-  .section-title {
-    animation: none;
+  .section-title-svg animateTransform {
+    display: none;
   }
 }
 
@@ -2404,6 +2406,41 @@
       rgba(0, 0, 0, 0) 100%);
 }
 
+.landing-shell[data-motion-mode="lite"] .landing-orb,
+.landing-shell[data-motion-mode="lite"] .landing-grid-glow,
+.landing-shell[data-motion-mode="lite"] .landing-noise {
+  display: none;
+}
+
+.landing-shell[data-motion-mode="lite"] .skills-rail-one .skills-rail-track,
+.landing-shell[data-motion-mode="lite"] .skills-rail-two .skills-rail-track,
+.landing-shell[data-motion-mode="lite"] .services-marquee-track,
+.landing-shell[data-motion-mode="lite"] .js-glyph-float,
+.landing-shell[data-motion-mode="lite"] .section-title-svg animateTransform {
+  animation: none !important;
+}
+
+.landing-shell[data-motion-mode="lite"] .service-wrap {
+  position: relative;
+  top: auto;
+  padding-bottom: 0;
+}
+
+.landing-shell[data-motion-mode="lite"] .services-stack {
+  gap: 1rem;
+}
+
+.landing-shell[data-motion-mode="lite"] .service-card,
+.landing-shell[data-motion-mode="lite"] .proj-card,
+.landing-shell[data-motion-mode="lite"] .cta-button,
+.landing-shell[data-motion-mode="lite"] .contact-card-action,
+.landing-shell[data-motion-mode="lite"] .theme-toggle-thumb,
+.landing-shell[data-motion-mode="lite"] .js-reveal {
+  transition: none !important;
+  transform: none !important;
+  filter: none !important;
+}
+
 @keyframes skills-rail-left {
   from {
     transform: translateX(0);
@@ -2459,9 +2496,8 @@
     animation-duration: 48s;
   }
 
-  /* Reduce gradient animation frequency on mobile */
-  .section-title {
-    animation-duration: 14s;
+  .section-title-svg {
+    width: min(100%, 28rem);
   }
 
   /* Contain paint/layout for heavy sections */

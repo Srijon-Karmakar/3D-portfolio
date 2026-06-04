@@ -1,8 +1,21 @@
 import { useEffect } from "react";
-import lottie from "lottie-web";
 
-export function useAnimatedFavicon(path = "/favicon/favicon.json", size = 64) {
+import { getDeviceProfile } from "../utils/performanceProfile";
+
+export function useAnimatedFavicon(
+  path = "/favicon/favicon.json",
+  size = 64,
+  enabled = true
+) {
   useEffect(() => {
+    const profile = getDeviceProfile();
+    if (!enabled || profile.prefersReducedMotion || profile.isConstrained) {
+      return undefined;
+    }
+
+    let disposed = false;
+    let anim = null;
+
     // Hidden off-screen container lottie will render a canvas into
     const container = document.createElement("div");
     Object.assign(container.style, {
@@ -16,17 +29,6 @@ export function useAnimatedFavicon(path = "/favicon/favicon.json", size = 64) {
     });
     document.body.appendChild(container);
 
-    const anim = lottie.loadAnimation({
-      container,
-      renderer: "canvas",
-      loop: true,
-      autoplay: true,
-      path,
-      rendererSettings: {
-        clearCanvas: true,
-      },
-    });
-
     // Get or create the favicon <link> element
     let link = document.querySelector("link[rel~='icon']");
     if (!link) {
@@ -35,19 +37,43 @@ export function useAnimatedFavicon(path = "/favicon/favicon.json", size = 64) {
       document.head.appendChild(link);
     }
 
+    let lastIconUpdate = 0;
+
     const onFrame = () => {
+      if (document.visibilityState !== "visible") return;
+
+      const now = performance.now();
+      if (now - lastIconUpdate < 250) return;
+
       const canvas = container.querySelector("canvas");
       if (canvas) {
+        lastIconUpdate = now;
         link.href = canvas.toDataURL("image/png");
       }
     };
 
-    anim.addEventListener("enterFrame", onFrame);
+    import("lottie-web").then(({ default: lottie }) => {
+      if (disposed) return;
+
+      anim = lottie.loadAnimation({
+        container,
+        renderer: "canvas",
+        loop: true,
+        autoplay: true,
+        path,
+        rendererSettings: {
+          clearCanvas: true,
+        },
+      });
+
+      anim.addEventListener("enterFrame", onFrame);
+    });
 
     return () => {
-      anim.removeEventListener("enterFrame", onFrame);
-      anim.destroy();
+      disposed = true;
+      anim?.removeEventListener("enterFrame", onFrame);
+      anim?.destroy();
       document.body.removeChild(container);
     };
-  }, [path, size]);
+  }, [enabled, path, size]);
 }

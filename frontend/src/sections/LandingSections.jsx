@@ -1101,10 +1101,11 @@
 
 
 // 3rd attempt
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { insertContactMessage } from "../lib/supabaseContact";
+import { getDeviceProfile } from "../utils/performanceProfile";
 import "./LandingSections.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -1352,28 +1353,60 @@ function Glyph({ type }) {
   );
 }
 
-function TitleReveal({ text }) {
-  return (
-    <span className="title-reveal">
-      {text.split(" ").map((word, index) => (
-        <span className="title-word-wrap" key={`${word}-${index}`}>
-          <span className="title-word js-title-word">{word}</span>
-        </span>
-      ))}
-    </span>
-  );
-}
-
 function SectionTitle({ text }) {
+  const gradientId = useId().replaceAll(":", "");
+  const viewWidth = Math.max(480, Math.round(text.length * 42));
+  const viewHeight = 140;
+  const textBaselineY = 112;
+
   return (
-    <h2 className="section-title">
-      <TitleReveal text={text} />
+    <h2 className="section-title" aria-label={text}>
+      <svg
+        className="section-title-svg"
+        viewBox={`0 0 ${viewWidth} ${viewHeight}`}
+        aria-hidden="true"
+        focusable="false"
+      >
+        <defs>
+          <linearGradient
+            id={gradientId}
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%"
+            gradientUnits="objectBoundingBox"
+          >
+            <stop offset="0%" stopColor="var(--landing-title-stop-1)" />
+            <stop offset="22%" stopColor="var(--landing-title-stop-2)" />
+            <stop offset="42%" stopColor="var(--landing-title-stop-3)" />
+            <stop offset="62%" stopColor="var(--landing-title-stop-4)" />
+            <stop offset="82%" stopColor="var(--landing-title-stop-5)" />
+            <stop offset="100%" stopColor="var(--landing-title-stop-6)" />
+            <animateTransform
+              attributeName="gradientTransform"
+              type="translate"
+              values="-0.35 0;0.35 0;-0.35 0"
+              dur="8s"
+              repeatCount="indefinite"
+            />
+          </linearGradient>
+        </defs>
+        <text
+          x="0"
+          y={textBaselineY}
+          fill={`url(#${gradientId})`}
+          className="section-title-svg-text"
+        >
+          {text}
+        </text>
+      </svg>
     </h2>
   );
 }
 
 export default function LandingSections() {
   const rootRef = useRef(null);
+  const [deviceProfile] = useState(() => getDeviceProfile());
   const [theme, setTheme] = useState(() => {
     if (typeof window === "undefined") return "light";
     return window.localStorage.getItem("landing-theme") || "light";
@@ -1425,12 +1458,12 @@ export default function LandingSections() {
     const root = rootRef.current;
     if (!root) return undefined;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    root.dataset.motionMode = deviceProfile.isConstrained ? "lite" : "full";
 
-    if (prefersReducedMotion) {
-      root.querySelectorAll(".js-reveal, .js-title-word").forEach((el) => {
+    if (deviceProfile.prefersReducedMotion || deviceProfile.isConstrained) {
+      root
+        .querySelectorAll(".js-reveal, .proj-card, .timeline-item, .service-card")
+        .forEach((el) => {
         gsap.set(el, {
           opacity: 1,
           y: 0,
@@ -1493,30 +1526,6 @@ export default function LandingSections() {
               );
             }
 
-            const words = gsap.utils.toArray(".js-title-word", group);
-            if (words.length) {
-              gsap.fromTo(
-                words,
-                {
-                  yPercent: 120,
-                  opacity: 0,
-                  rotate: 2,
-                },
-                {
-                  yPercent: 0,
-                  opacity: 1,
-                  rotate: 0,
-                  duration: mobile ? 0.7 : 0.85,
-                  stagger: mobile ? 0.035 : 0.045,
-                  ease: "power4.out",
-                  scrollTrigger: {
-                    trigger: group,
-                    start,
-                    once: true,
-                  },
-                }
-              );
-            }
           });
 
           const projectCards = gsap.utils.toArray(".proj-card", root);
@@ -1578,26 +1587,33 @@ export default function LandingSections() {
           }
 
           const serviceCards = gsap.utils.toArray(".service-card", root);
-          gsap.set(serviceCards, {
-            opacity: 0,
-            y: 56,
-            scale: 0.975,
-            transformOrigin: "center top",
-          });
+          const servicesStack = root.querySelector(".services-stack");
 
-          ScrollTrigger.batch(serviceCards, {
-            start: mobile ? "top 94%" : "top 88%",
-            once: true,
-            onEnter: (batch) =>
-              gsap.to(batch, {
+          if (serviceCards.length && servicesStack) {
+            gsap.fromTo(
+              serviceCards,
+              {
+                opacity: 0,
+                y: 56,
+                scale: 0.975,
+                transformOrigin: "center top",
+              },
+              {
                 opacity: 1,
                 y: 0,
                 scale: 1,
                 duration: mobile ? 0.85 : 1,
+                stagger: 0.12,
                 ease: "power3.out",
-                stagger: { each: 0.12, from: "start" },
-              }),
-          });
+                overwrite: "auto",
+                scrollTrigger: {
+                  trigger: servicesStack,
+                  start: mobile ? "top 94%" : "top 88%",
+                  once: true,
+                },
+              }
+            );
+          }
 
           const serviceWraps = gsap.utils.toArray(".service-wrap", root);
           serviceWraps.slice(0, -1).forEach((wrap, i) => {
@@ -1699,10 +1715,14 @@ export default function LandingSections() {
       motionObserver?.disconnect();
       ctx.revert();
     };
-  }, []);
+  }, [deviceProfile]);
 
   return (
-    <div className={`landing-shell landing-shell-${theme}`} ref={rootRef}>
+    <div
+      className={`landing-shell landing-shell-${theme}`}
+      data-motion-mode={deviceProfile.isConstrained ? "lite" : "full"}
+      ref={rootRef}
+    >
       <div className="landing-noise" aria-hidden="true" />
       <div className="landing-orb landing-orb-a" aria-hidden="true" />
       <div className="landing-orb landing-orb-b" aria-hidden="true" />
@@ -1731,7 +1751,6 @@ export default function LandingSections() {
         id="about"
       >
         <div className="section-heading js-reveal">
-          <span className="section-kicker">About</span>
           <SectionTitle text="I build scalable digital products." />
           <p className="section-copy">
             Full Stack Developer with hands-on experience building scalable web
@@ -1796,7 +1815,6 @@ export default function LandingSections() {
 
       <section className="portfolio-section js-reveal-group" id="skills">
         <div className="section-heading js-reveal">
-          <span className="section-kicker">Skills</span>
           <SectionTitle text="Tools I work with." />
           <p className="section-copy">
             A focused stack for building modern web applications.
@@ -1852,7 +1870,6 @@ export default function LandingSections() {
         id="projects"
       >
         <div className="section-heading proj-header js-reveal">
-          <span className="section-kicker">Projects</span>
           <SectionTitle text="Selected projects." />
           <p className="section-copy">
             Real-world applications built with performance, scalability, and
@@ -1940,7 +1957,6 @@ export default function LandingSections() {
 
       <section className="portfolio-section js-reveal-group" id="experience">
         <div className="section-heading js-reveal">
-          <span className="section-kicker">Experience</span>
           <SectionTitle text="Experience." />
           <p className="section-copy">
             Building production systems and delivering real-world applications.
@@ -1972,7 +1988,6 @@ export default function LandingSections() {
       <section className="services-section" id="services">
         <div className="portfolio-section services-inner js-reveal-group">
           <div className="section-heading js-reveal">
-            <span className="section-kicker">Services</span>
             <SectionTitle text="What I do best." />
             <p className="section-copy">
               Design-forward engineering with strong interfaces, structured
@@ -2035,7 +2050,6 @@ export default function LandingSections() {
       <section className="portfolio-section cta-panel js-reveal-group" id="cta">
         <div className="cta-layout">
           <div className="section-heading js-reveal">
-            <span className="section-kicker">Contact</span>
             <SectionTitle text="Let’s build something great." />
             <p className="section-copy">
               Open to full-time roles, freelance projects, and collaborations
@@ -2063,7 +2077,6 @@ export default function LandingSections() {
 
       <section className="portfolio-section js-reveal-group" id="contact">
         <div className="section-heading js-reveal">
-          <span className="section-kicker">Get in touch</span>
           <SectionTitle text="Get in touch." />
           <p className="section-copy">
             Feel free to reach out for opportunities, collaborations, or project

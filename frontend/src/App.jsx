@@ -28,6 +28,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Transition from "./components/transition";
 import { useAnimatedFavicon } from "./hooks/useAnimatedFavicon";
+import { getDeviceProfile } from "./utils/performanceProfile";
 
 const Spline = lazy(() => import("./components/spline"));
 const Dash = lazy(() => import("./pages/Dashboard"));
@@ -37,7 +38,8 @@ const THEME_COUNT = 7;
 
 
 export default function App() {
-  useAnimatedFavicon();
+  const [profile] = useState(() => getDeviceProfile());
+  useAnimatedFavicon("/favicon/favicon.json", 64, !profile.isConstrained);
 
   const [themeIndex, setThemeIndex] = useState(0);
 

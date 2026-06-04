@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   fetchAdminContacts,
-  refreshAdminSession,
   signInAdmin,
   signOutAdmin,
 } from "../lib/supabaseAdmin";
 import "./Admin.css";
 
-const SESSION_KEY = "supabase-admin-session";
+const SESSION_KEY = "portfolio-admin-session";
 
 function readStoredSession() {
   if (typeof window === "undefined") {
@@ -48,16 +47,15 @@ function formatDate(value) {
 }
 
 export default function Admin() {
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [accessKey, setAccessKey] = useState("");
   const [session, setSession] = useState(() => readStoredSession());
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
 
-  const accessToken = session?.access_token || "";
-  const refreshToken = session?.refresh_token || "";
-  const adminEmail = session?.user?.email || "";
+  const sessionToken = session?.token || "";
+  const expiresAt = session?.expires_at || "";
 
   const summary = useMemo(() => {
     const unread = contacts.filter((item) => item.status === "new").length;
@@ -74,57 +72,46 @@ export default function Admin() {
       setContacts(rows);
       setMessage({ type: "", text: "" });
     } catch (error) {
-      if (refreshToken) {
-        try {
-          const refreshed = await refreshAdminSession(refreshToken);
-          setSession(refreshed);
-          writeStoredSession(refreshed);
-          const rows = await fetchAdminContacts(refreshed.access_token);
-          setContacts(rows);
-          setMessage({ type: "", text: "" });
-          return;
-        } catch {
-          setSession(null);
-          writeStoredSession(null);
-        }
-      }
-
-      setMessage({ type: "error", text: error?.message || "Failed to load contacts." });
+      setSession(null);
+      writeStoredSession(null);
+      setMessage({
+        type: "error",
+        text: error?.message || "Failed to load contacts.",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!sessionToken) {
       return;
     }
 
-    loadContacts(accessToken);
-  }, [accessToken]);
-
-  const onChangeCredential = (key, value) => {
-    setCredentials((current) => ({ ...current, [key]: value }));
-  };
+    loadContacts(sessionToken);
+  }, [sessionToken]);
 
   const onSubmit = async (event) => {
     event.preventDefault();
     setMessage({ type: "", text: "" });
 
-    if (!credentials.email.trim() || !credentials.password.trim()) {
-      setMessage({ type: "error", text: "Enter your Supabase admin email and password." });
+    if (!accessKey.trim()) {
+      setMessage({ type: "error", text: "Enter the admin access key." });
       return;
     }
 
     setAuthLoading(true);
     try {
-      const data = await signInAdmin(credentials.email.trim(), credentials.password);
+      const data = await signInAdmin(accessKey.trim());
       setSession(data);
       writeStoredSession(data);
-      setCredentials((current) => ({ ...current, password: "" }));
-      setMessage({ type: "success", text: "Signed in successfully." });
+      setAccessKey("");
+      setMessage({ type: "success", text: "Access granted." });
     } catch (error) {
-      setMessage({ type: "error", text: error?.message || "Admin sign-in failed." });
+      setMessage({
+        type: "error",
+        text: error?.message || "Admin access denied.",
+      });
     } finally {
       setAuthLoading(false);
     }
@@ -132,11 +119,9 @@ export default function Admin() {
 
   const onSignOut = async () => {
     try {
-      if (accessToken) {
-        await signOutAdmin(accessToken);
-      }
+      await signOutAdmin();
     } catch {
-      // Ignore logout network errors and clear local state anyway.
+      // Ignore local sign-out cleanup errors.
     }
 
     setSession(null);
@@ -153,20 +138,29 @@ export default function Admin() {
             <p className="admin-kicker">Admin</p>
             <h1>Contact inbox</h1>
             <p className="admin-copy">
-              Sign in with a Supabase user account to review contact submissions from the portfolio form.
+              Enter the admin access key to review contact submissions from the
+              portfolio form.
             </p>
           </div>
 
           {session ? (
             <div className="admin-toolbar">
               <div className="admin-chip">
-                <span>Signed in as</span>
-                <strong>{adminEmail}</strong>
+                <span>Access valid until</span>
+                <strong>{formatDate(expiresAt)}</strong>
               </div>
-              <button type="button" className="admin-button admin-button-secondary" onClick={() => loadContacts(accessToken)}>
+              <button
+                type="button"
+                className="admin-button admin-button-secondary"
+                onClick={() => loadContacts(sessionToken)}
+              >
                 Refresh
               </button>
-              <button type="button" className="admin-button" onClick={onSignOut}>
+              <button
+                type="button"
+                className="admin-button"
+                onClick={onSignOut}
+              >
                 Sign out
               </button>
             </div>
@@ -174,34 +168,30 @@ export default function Admin() {
         </header>
 
         {message.text ? (
-          <p className={`admin-status admin-status-${message.type || "neutral"}`}>{message.text}</p>
+          <p className={`admin-status admin-status-${message.type || "neutral"}`}>
+            {message.text}
+          </p>
         ) : null}
 
         {!session ? (
           <section className="admin-auth-card">
             <form className="admin-auth-form" onSubmit={onSubmit}>
               <label>
-                <span>Email</span>
-                <input
-                  type="email"
-                  placeholder="admin@example.com"
-                  value={credentials.email}
-                  onChange={(event) => onChangeCredential("email", event.target.value)}
-                />
-              </label>
-
-              <label>
-                <span>Password</span>
+                <span>Access key</span>
                 <input
                   type="password"
-                  placeholder="Enter password"
-                  value={credentials.password}
-                  onChange={(event) => onChangeCredential("password", event.target.value)}
+                  placeholder="Enter admin key"
+                  value={accessKey}
+                  onChange={(event) => setAccessKey(event.target.value)}
                 />
               </label>
 
-              <button type="submit" className="admin-button" disabled={authLoading}>
-                {authLoading ? "Signing in..." : "Sign in"}
+              <button
+                type="submit"
+                className="admin-button"
+                disabled={authLoading}
+              >
+                {authLoading ? "Checking..." : "Open dashboard"}
               </button>
             </form>
           </section>
@@ -234,7 +224,11 @@ export default function Admin() {
                         <p>{item.email}</p>
                       </div>
                       <div className="admin-contact-meta">
-                        <span className={`admin-status-pill admin-status-pill-${item.status || "new"}`}>
+                        <span
+                          className={`admin-status-pill admin-status-pill-${
+                            item.status || "new"
+                          }`}
+                        >
                           {item.status || "new"}
                         </span>
                         <time>{formatDate(item.created_at)}</time>
@@ -247,7 +241,9 @@ export default function Admin() {
                       <a className="admin-link" href={`mailto:${item.email}`}>
                         Email
                       </a>
-                      <span className="admin-user-agent">{item.user_agent || "No user agent captured"}</span>
+                      <span className="admin-user-agent">
+                        {item.user_agent || "No user agent captured"}
+                      </span>
                     </div>
                   </article>
                 ))}

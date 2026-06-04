@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Lenis from "lenis";
+
+import { getDeviceProfile } from "../utils/performanceProfile";
 
 export default function Transition() {
   const location = useLocation();
@@ -8,34 +10,51 @@ export default function Transition() {
   const lenisRef = useRef(null);
   const rafIdRef = useRef(null);
 
-  // ---- INIT LENIS ----
   useEffect(() => {
-    // Skip smooth scroll on mobile — native scroll is faster on touch devices
-    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
-    if (isMobile) return;
+    const profile = getDeviceProfile();
+    if (!profile.canUseSmoothScroll) return undefined;
 
-    const lenis = new Lenis({
-      lerp: 0.1,
-      smoothWheel: true,
-      smoothTouch: false,
-    });
+    let cancelled = false;
+    let idleId = null;
 
-    lenisRef.current = lenis;
+    const startLenis = () => {
+      if (cancelled) return;
 
-    const raf = (time) => {
-      lenis.raf(time);
+      const lenis = new Lenis({
+        lerp: 0.1,
+        smoothWheel: true,
+        smoothTouch: false,
+      });
+
+      lenisRef.current = lenis;
+
+      const raf = (time) => {
+        lenis.raf(time);
+        rafIdRef.current = requestAnimationFrame(raf);
+      };
+
       rafIdRef.current = requestAnimationFrame(raf);
     };
 
-    rafIdRef.current = requestAnimationFrame(raf);
+    if ("requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(startLenis, { timeout: 1200 });
+    } else {
+      idleId = window.setTimeout(startLenis, 250);
+    }
 
     return () => {
+      cancelled = true;
+      if ("cancelIdleCallback" in window && typeof idleId === "number") {
+        window.cancelIdleCallback(idleId);
+      } else if (idleId !== null) {
+        window.clearTimeout(idleId);
+      }
       if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-      lenis.destroy();
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
-  // Scroll to top on route change
   useEffect(() => {
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });

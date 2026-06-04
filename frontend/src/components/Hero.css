@@ -284,6 +284,22 @@ box-shadow:
   max-width: 320px;
 }
 
+.hero-name-static {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-bottom: 1.2rem;
+}
+
+.hero-name-static-line {
+  margin: 0;
+  font-size: clamp(3.2rem, 11vw, 6.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  font-weight: 800;
+  color: #ffffff;
+}
+
 /* Each TextPressure line behaves like a big hero title */
 /* .hero-name-line {
   width: 100%;
@@ -301,6 +317,15 @@ box-shadow:
 /* Extra safety – keep big name crisp */
 .hero-name-line span {
   color: #ffffff;
+}
+
+.hero-root[data-lite-mode="true"] .hero-canvas-float,
+.hero-root[data-lite-mode="true"] .hero-text-block > * {
+  animation: none;
+}
+
+.hero-root[data-lite-mode="true"] .hero-canvas-inner {
+  transform: none;
 }
 
 /* Role – fluid size */
@@ -372,6 +397,10 @@ box-shadow:
     align-items: center;
   }
 
+  .hero-name-static {
+    align-items: center;
+  }
+
   .hero-name-line {
     text-align: center;
     justify-content: center;
@@ -427,6 +456,10 @@ box-shadow:
 
   .hero-name-pressure {
     max-width: 100%;
+    align-items: center;
+  }
+
+  .hero-name-static {
     align-items: center;
   }
 
