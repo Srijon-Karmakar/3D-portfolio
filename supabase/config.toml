@@ -1,0 +1,7 @@
+project_id = "portfolio"
+
+[functions.chat]
+verify_jwt = true
+
+[functions.contact]
+verify_jwt = true

@@ -1,32 +1,25 @@
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const contactTable = import.meta.env.VITE_SUPABASE_CONTACT_TABLE || "contact_messages";
-
-function ensureSupabaseConfig() {
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error("Supabase is not configured in the frontend environment.");
-  }
-}
-
-function buildUrl(path) {
-  ensureSupabaseConfig();
-  return new URL(path, supabaseUrl).toString();
-}
+import {
+  buildSupabaseUrl,
+  contactTable,
+  getSupabaseHeaders,
+} from "./supabaseConfig";
 
 function getBaseHeaders(token) {
   return {
-    apikey: supabaseAnonKey,
-    Authorization: `Bearer ${token || supabaseAnonKey}`,
+    ...getSupabaseHeaders(token),
     "Content-Type": "application/json",
   };
 }
 
 export async function signInAdmin(email, password) {
-  const response = await fetch(buildUrl("/auth/v1/token?grant_type=password"), {
-    method: "POST",
-    headers: getBaseHeaders(),
-    body: JSON.stringify({ email, password }),
-  });
+  const response = await fetch(
+    buildSupabaseUrl("/auth/v1/token?grant_type=password"),
+    {
+      method: "POST",
+      headers: getBaseHeaders(),
+      body: JSON.stringify({ email, password }),
+    }
+  );
 
   const data = await response.json().catch(() => null);
 
@@ -38,11 +31,14 @@ export async function signInAdmin(email, password) {
 }
 
 export async function refreshAdminSession(refreshToken) {
-  const response = await fetch(buildUrl("/auth/v1/token?grant_type=refresh_token"), {
-    method: "POST",
-    headers: getBaseHeaders(),
-    body: JSON.stringify({ refresh_token: refreshToken }),
-  });
+  const response = await fetch(
+    buildSupabaseUrl("/auth/v1/token?grant_type=refresh_token"),
+    {
+      method: "POST",
+      headers: getBaseHeaders(),
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    }
+  );
 
   const data = await response.json().catch(() => null);
 
@@ -55,7 +51,7 @@ export async function refreshAdminSession(refreshToken) {
 
 export async function fetchAdminContacts(accessToken) {
   const query = `/rest/v1/${contactTable}?select=id,name,email,message,status,user_agent,created_at&order=created_at.desc`;
-  const response = await fetch(buildUrl(query), {
+  const response = await fetch(buildSupabaseUrl(query), {
     method: "GET",
     headers: getBaseHeaders(accessToken),
   });
@@ -63,14 +59,19 @@ export async function fetchAdminContacts(accessToken) {
   const data = await response.json().catch(() => null);
 
   if (!response.ok) {
-    throw new Error(data?.message || data?.error_description || data?.error || "Failed to load contacts.");
+    throw new Error(
+      data?.message ||
+        data?.error_description ||
+        data?.error ||
+        "Failed to load contacts."
+    );
   }
 
   return Array.isArray(data) ? data : [];
 }
 
 export async function signOutAdmin(accessToken) {
-  const response = await fetch(buildUrl("/auth/v1/logout"), {
+  const response = await fetch(buildSupabaseUrl("/auth/v1/logout"), {
     method: "POST",
     headers: getBaseHeaders(accessToken),
   });
